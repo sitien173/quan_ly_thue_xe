@@ -1,0 +1,229 @@
+﻿@using Microsoft.Extensions.Options
+@using CarRentalManagement.Models.Settings
+@using CarRentalManagement.Extensions
+@model CarRentalManagement.Models.ViewModel.ContractManagement.PreviewContractViewModel
+@inject IOptions<CompanySettings> CompanySettings
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid mr-top-20" xmlns="http://www.w3.org/1999/html">
+<div class="panel panel-primary">
+<div class="panel-heading">Hợp Đồng Thuê Xe</div>
+<div class="panel-body">
+<div id="contentEdit">
+<p style="text-align:center">
+    <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br></strong><strong>Độc lập - Tự do - Hạnh phúc<br></strong><strong>——————</strong>
+</p>
+<p style="text-align:center">
+    <strong>HỢP ĐỒNG THUÊ XE Ô TÔ</strong>
+</p>
+<p style="text-align:center">
+    <em>(Số: @Model.Id/HĐTX)</em>
+</p>
+<p>
+    <em>- Căn cứ</em><em> </em><em>Bộ luật dân sự số 91/2015/QH13 </em><em>do Quốc hội ban hành ngày 24/11/2015 ;</em>
+</p>
+<p>
+    <em>- Căn cứ</em><em> </em><em>Luật thương mại </em><em>số 36/2005/QH11 do Quốc hội ban hành ngày 14/06/2005;</em>
+</p>
+<p>
+    <em>- Căn cứ</em><em> </em><em>Luật doanh nghiệp</em><em> </em><em>hiện hành;</em>
+</p>
+<p>
+    <em>Hôm nay, ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year, tại địa chỉ @CompanySettings.Value.Address</em>
+</p>
+<p>Chúng tôi gồm có:</p>
+<div class="row">
+    <div class="col-xs-6 col-md-12">
+        <div>
+            <strong>Bên cho thuê (Bên A):</strong>
+            <p>Tên công ty: @CompanySettings.Value.Name - Mã số thuế: @CompanySettings.Value.TaxCode</p>
+            <p>Địa chỉ: @CompanySettings.Value.Address</p>
+            <p>Đại diện bởi Ông/Bà: @CompanySettings.Value.Representative - Chức vụ: @CompanySettings.Value.RepresentativePosition</p>
+            <p>Điện thoại: @CompanySettings.Value.Phone</p>
+            <p>Email: @CompanySettings.Value.Email</p>
+        </div>
+    </div>
+    <div class="col-xs-6 col-md-12">
+        <div>
+            <strong>Bên thuê (Bên B):</strong>
+            <p>Họ và tên: @Model.CustomerDetail.FullName</p>
+            <p>Sinh ngày: @Model.CustomerDetail.BirthDate.ToString(Constant.DateFormat)</p>
+            <p>CMND/Thẻ CCCD/Hộ chiếu số: @Model.CustomerDetail.IDCard - Cấp ngày: @Model.CustomerDetail.DateOfIssue.ToString(Constant.DateFormat) - Nơi cấp: @Model.CustomerDetail.PlaceOfIssue</p>
+            <p>Địa chỉ thường trú: @Model.CustomerDetail.Domicile</p>
+            <p>Địa chỉ tạm trú: @Model.CustomerDetail.TempAccommodation</p>
+        </div>
+    </div>
+</div>
+<p>
+    <em>Hai bên cùng thỏa thuận, thống nhất ký hợp đồng với những nội dung sau:</em>
+</p>
+<p><strong>ĐIỀU 1</strong>: <strong>NỘI DUNG CÔNG VIỆC</strong></p>
+<p>
+    Bên A cho bên B thuê @Model.TotalCarRent chiếc xe. Thời gian phụ thuộc yêu cầu bên thuê, với đầy đủ tiện nghi và giấy tờ hợp lệ.
+</p>
+<p>
+    <strong>ĐIỀU 2:</strong><strong> </strong><strong>GIÁ THUÊ VÀ PHƯƠNG THỨC THANH TOÁN</strong><strong> </strong>
+</p>
+<div>
+    <p>2.1. Danh sách xe thuê và giá thuê</p>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Tên xe</th>
+            <th scope="col">Loại xe</th>
+            <th scope="col">Biển số</th>
+            <th scope="col">Số máy</th>
+            <th scope="col">Số khung</th>
+            <th scope="col">Thương hiệu</th>
+            <th scope="col">Ngày thuê</th>
+            <th scope="col">Ngày trả</th>
+            <th scope="col">Phương thức thuê</th>
+            <th scope="col">Giá</th>
+        </tr>
+        </thead>
+        <tbody>
+        @for (var i = 0; i < Model.ContractDetails.Count; i++)
+        {
+            <tr>
+                <th scope="row">
+                    @{@(i + 1)}
+                </th>
+                <td>@Model.ContractDetails[i].CarDetail.Name</td>
+                <td>@Model.ContractDetails[i].CarDetail.CarTypeName</td>
+                <td>@Model.ContractDetails[i].CarDetail.LicensePlate</td>
+                <td>@Model.ContractDetails[i].CarDetail.EngineSerialNumber</td>
+                <td>@Model.ContractDetails[i].CarDetail.VIN</td>
+                <td>@Model.ContractDetails[i].CarDetail.BrandName</td>
+                <td>@Model.ContractDetails[i].RentalDate.ToString(Constant.DateFormat)</td>
+                <td>@Model.ContractDetails[i].ReturnedDate.ToString(Constant.DateFormat)</td>
+                <td>@Model.ContractDetails[i].Estimate.RentalMethod.GetDescription()</td>
+                <td class="price">@Model.ContractDetails[i].Estimate.UnitPrice</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <p>2.2. Bảng phụ phí</p>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Loại xe</th>
+            <th scope="col">Bảng phụ phí</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{ var contractDetail = Model.ContractDetails.DistinctBy(x => x.CarDetail.CarTypeName).ToList();}
+        @for (int i = 0; i < contractDetail.Count; i++)
+        {
+            <tr>
+                <th scope="row">
+                    @{@(i + 1)}
+                </th>
+                <td>@contractDetail[i].CarDetail.CarTypeName</td>
+                <td>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            @foreach (var item in contractDetail[i].SurCharges)
+                            {
+                                <td >@item.Name</td>
+                            }
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            @foreach (var item in contractDetail[i].SurCharges)
+                            {
+                                <td class="price">@item.Price</td>
+                            }
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <p>a) Tổng cộng: <span class="price">@Model.Total</span></p>
+    <p>a) Đưa trước: <span class="price">@Model.Prepay</span></p>
+    <p>b) Còn lại: <span class="price">@Model.Debt</span></p>
+    <p>2.3. Hình thức thanh toán: Trả bằng tiền mặt.</p>
+</div>
+<p>2.4. Việc giao và nhận số tiền nêu trên do hai bên tự thực hiện và chịu trách nhiệm trước pháp luật.</p>
+<p>
+    <strong>ĐIỀU 3: NGHĨA VỤ VÀ QUYỀN CỦA BÊN A</strong>
+</p>
+<p>
+    <em>3.1. Bên A có các nghĩa vụ sau đây:</em>
+</p>
+<p>a) Giao xe và toàn bộ giấy tờ liên quan (giấy đăng ký xe, giấy kiểm định, giấy tờ bảo hiểm xe,…….) đến xe cho bên B đúng chất lượng và thời gian.</p>
+<p>b) Chịu trách nhiệm pháp lý về nguồn gốc và quyền sở hữu xe.</p>
+<p>c) Mua bảo hiểm xe và đăng kiểm xe cho các lần kế tiếp trong thời gian hiệu lực của hợp đồng.</p>
+<p>d) Bảo đảm quyền sử dụng tài sản ổn định cho bên B.</p>
+<p>e) Thông báo cho bên B về quyền của người thứ ba (<em>nếu có)</em>đối với tài sản thuê.</p>
+<p>
+    <em>3.2. Bên A có các quyền sau đây:</em>
+</p>
+<p>a) Nhận đủ tiền thuê tài sản theo phương thức đã thỏa thuận;</p>
+<p>b) Khi hết hạn hợp đồng, nhận lại tài sản thuê trong tình trạng như khi nhận, trừ hao mòn tự nhiên hoặc theo đúng như tình trạng đã thỏa thuận, nếu giá trị của tài sản thuê bị giảm sút so với tình trạng khi nhận thì bên A có quyền yêu cầu bồi thường thiệt hại, trừ hao mòn tự nhiên;</p>
+<p>c) Đơn phương chấm dứt thực hiện hợp đồng và yêu cầu bồi thường thiệt hại nếu Bên B có một trong các hành vi sau đây:</p>
+<ul>
+    <li>Không trả tiền thuê trong ba kỳ liên tiếp;</li><li>Sử dụng tài sản thuê không đúng mục đích, công dụng của tài sản;</li><li>Làm tài sản thuê mất mát, hư hỏng;</li><li>Sửa chữa, đổi hoặc cho người khác thuê lại mà không có sự đồng ý của Bên A;</li>
+</ul>
+<p><strong>ĐIỀU 4</strong>: <strong>NGHĨA VỤ VÀ QUYỀN CỦA BÊN B</strong><strong> </strong></p>
+<p>
+    <em>4.1. Bên B có các nghĩa vụ sau đây:</em>
+</p>
+<p>a) Bảo quản tài sản thuê như tài sản của chính mình, phải bảo dưỡng và sửa chữa, không được thay đổi tình trạng tài sản, cho thuê lại tài sản nếu không có sự đồng ý của bên A; nếu làm mất mát, hư hỏng thì phải bồi thường;</p>
+<p>b) Sử dụng tài sản thuê đúng công dụng, mục đích của tài sản;</p>
+<p>c) Trả đủ tiền thuê xe đúng thời hạn theo phương thức đã thỏa thuận;</p>
+<p>d) Trả lại tài sản thuê trong tình trạng như khi nhận, trừ hao mòn tự nhiên hoặc theo đúng như tình trạng đã thỏa thuận; bên B phải trả tiền phạt vi phạm do chậm trả tài sản thuê nếu có thỏa thuận; bên B phải chịu rủi ro xảy ra đối với tài sản thuê trong thời gian chậm trả;</p>
+<p>
+    <em>4.2. Bên B có các quyền sau đây:</em>
+</p>
+<p>a) Nhận xe và kiểm tra kỹ xe trước khi nhận;</p>
+<p>b) Yêu cầu bên A sửa chữa, giảm giá thuê hoặc hủy bỏ hợp đồng và yêu cầu bồi thường thiệt hại trong trường hợp bên A chậm giao xe;</p>
+<p>c) Không được cho thuê lại tài sản đã thuê, trừ trường hợp được bên A đồng ý;</p>
+<p>d) Đơn phương chấm dứt thực hiện hợp đồng thuê tài sản và yêu cầu bồi thường thiệt hại nếu:</p>
+<ul>
+    <li>Bên A chậm giao xe hoặc giao xe không đúng chất lượng như thỏa thuận;</li><li>Tài sản thuê không thể sửa chữa, do đó mục đích thuê không đạt được hoặc tài sản thuê có khuyết tật mà bên B không biết;</li><li>Có tranh chấp về quyền sở hữu đối với tài sản thuê mà bên B không được sử dụng tài sản ổn định;</li>
+</ul>
+<p>
+    <strong>ĐIỀU 5: PHƯƠNG THỨC GIẢI QUYẾT TRANH CHẤP</strong>
+</p>
+<p>Trong quá trình thực hiện hợp đồng mà phát sinh tranh chấp, các bên cùng nhau thương lượng giải quyết trên nguyên tắc tôn trọng quyền lợi của nhau; trong trường hợp không giải quyết được, thì một trong hai bên có quyền khởi kiện để yêu cầu toà án có thẩm quyền giải quyết theo quy định của pháp luật.</p>
+<p>
+    <strong>ĐIỀU 6: HIỆU LỰC CỦA HỢP ĐỒNG</strong>
+</p>
+<p>Hợp đồng này có hiệu lực từ kể từ ngày ký, được lập thành 02 (hai) bản, mỗi bên giữ một bản và có giá trị như nhau.</p>
+<div class="row">
+    <div class="col-xs-6 text-center">
+        <p>
+            <strong>ĐẠI DIỆN BÊN A</strong><strong> </strong>
+        </p>
+        <p>
+            <em>(Ký ghi rõ họ tên, đóng dấu)</em>
+        </p>
+    </div>
+
+    <div class="col-xs-6 text-center">
+        <p>
+            <strong>ĐẠI DIỆN BÊN B</strong><strong> </strong>
+        </p>
+        <p>
+            <em>(Ký ghi rõ họ tên, đóng dấu)</em>
+        </p>
+    </div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+    <a type="button" class="btn btn-default" asp-action="Index">Thoát</a>
+    <button type="button" class="btn btn-primary print" data-contentId="contentEdit">In</button>
+</div>
+</div>
+</div>

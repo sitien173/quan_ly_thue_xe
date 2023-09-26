@@ -1,0 +1,52 @@
+﻿@using CarRentalManagement.Services
+@model CarRentalManagement.Models.ViewModel.AccidentManagement.AddAccidentViewModel
+@inject ICarService CarService
+@inject IContractService ContractService
+@{
+    ViewBag.Title = "Khai báo tai nạn";
+    Layout = "_Layout";
+    
+    var carSelectList = await CarService.ListAsync<SelectListItem>().ConfigureAwait(false);
+    var contractSelectList = await ContractService.ListAsync<SelectListItem>().ConfigureAwait(false);
+}
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <form asp-action="Add" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="well well-sm text-danger">@TempData["Message"]</div>
+                <input type="hidden" asp-for="ReturnUrl"/>
+                <input type="hidden" asp-for="CreatedBy"/>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="CarId" class="control-label"></label>
+                    <select asp-items="carSelectList" asp-for="CarId" class="form-control chosen"></select>
+                    <span asp-validation-for="CarId" class="text-danger"></span>
+                </fieldset>
+
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="ContractId" class="control-label"></label>
+                    <select asp-items="contractSelectList" asp-for="ContractId" class="form-control chosen"></select>
+                    <span asp-validation-for="ContractId" class="text-danger"></span>
+                </fieldset>
+
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="AccidentAt" class="control-label"></label>
+                    <input asp-for="AccidentAt" class="form-control"/>
+                    <span asp-validation-for="AccidentAt" class="text-danger"></span>
+                </fieldset>
+
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </fieldset>
+
+                <div style="float: right">
+                    <a class="btn btn-default" id="cancel">Huỷ</a>
+                    <button class="btn btn-primary" type="submit">Thêm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

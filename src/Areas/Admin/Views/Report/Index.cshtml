@@ -1,0 +1,135 @@
+﻿@using CarRentalManagement.Extensions
+@using CarRentalManagement.Areas.Admin.Controllers
+@using CarRentalManagement.Models.ViewModel.CarManagement
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Báo cáo";
+    var topCarRent = ViewData[ReportController.TopCarRent] as IEnumerable<ListCarViewModel>;
+}
+
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Doanh thu</div>
+        <div class="panel-body">
+            <form class="form-group" data-ajax-url="@Url.Action("Revenue")" data-ajax="true" data-ajax-method="post" data-ajax-success="showReport">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label">Từ ngày</label>
+                        <input type="date" name="startDate" class="form-control" value="@DateTime.Now">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="control-label">Đến ngày</label>
+                        <input type="date" name="endDate" class="form-control" value="@DateTime.Now">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Hiển thị theo</label>
+                        <select name="reportType" class="form-control chosen" asp-items="@ReportTypeEnum.Month.ToSelectList()">
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <br>
+                        <button type="submit" class="btn btn-primary">Xem</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="panel-body" id="showReport">
+            <canvas id="report"></canvas>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Top 10 xe được thuê nhiều nhất</div>
+        <div class="panel-body">
+            <table id="datatable" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Mã xe</th>
+                    <th>Tên</th>
+                    <th>Biển số</th>
+                    <th>Màu</th>
+                    <th>Số chỗ ngồi</th>
+                    <th>Truyền động</th>
+                    <th>Nhiên liệu</th>
+                    <th>Thương hiệu</th>
+                    <th>Loại xe</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in topCarRent!)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="CarManagement" asp-action="Edit" asp-route-id="@item.Id">@item.Id</a>
+                        </td>
+                        <td>@Html.DisplayFor(x => item.Name)</td>
+                        <td>@Html.DisplayFor(x => item.LicensePlate)</td>
+                        <td>@Html.DisplayFor(x => item.Color)</td>
+                        <td>@Html.DisplayFor(x => item.Seat)</td>
+                        <td>@item.TransmissionEnum.GetDescription()</td>
+                        <td>@item.FuelEnum.GetDescription()</td>
+                        <td>@Html.DisplayFor(x => item.BrandName)</td>
+                        <td>@Html.DisplayFor(x => item.CarTypeName)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        const bindReport = function(json) {
+            const canvas = document.createElement("canvas");
+            const $showReport = $('#showReport');
+            $showReport.empty();
+            $showReport.html(canvas);
+            const obj = JSON.parse(json);
+            const data = {
+                labels: obj.data.labels,
+                datasets: obj.data.datasets.map(x => {
+                    return {
+                        label: x.label,
+                        data: x.data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        pointRadius: 3,
+                        pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                        pointBorderColor: 'rgba(54, 162, 235, 1)',
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: 'rgba(54, 162, 235, 1)',
+                        pointHoverBorderColor: 'rgba(54, 162, 235, 1)',
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2
+                    }
+                })
+            };
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                        scales: {
+                        y: {
+                            beginAtZero: true          
+                        }
+                        }, 
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                }
+            };
+            const chart = new Chart(
+                canvas,
+                config
+            );
+        }
+        showReport = function(data) {
+            bindReport(data);
+        }
+    </script>
+}

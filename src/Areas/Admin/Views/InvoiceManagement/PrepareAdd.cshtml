@@ -1,0 +1,29 @@
+﻿@using CarRentalManagement.Services
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CarRentalManagement.Models.ViewModel.InvoiceManagement.AddInvoiceViewModel
+@inject IContractService ContractService
+@{
+    ViewBag.Title = "Thêm hoá đơn";
+    Layout = "_Layout";
+
+    var contractSelectListItems = await ContractService.ListAsync<SelectListItem>();
+}
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <form asp-action="PrepareAdd" method="post">
+                <input type="hidden" name="ReturnUrl" value="@Context.Request.Headers["Referer"].ToString()">
+                <fieldset class="form-floating mb-3">
+                    <label class="control-label required">Mã hợp đồng</label>
+                    <select name="contractId" asp-items="contractSelectListItems" required class="form-control chosen">
+                    </select>
+                </fieldset>
+                <div class="text-right">
+                    <a class="btn btn-default" id="cancel">Huỷ</a>
+                    <button class="btn btn-primary" type="submit">Tiếp theo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

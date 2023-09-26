@@ -1,0 +1,222 @@
+﻿@using CarRentalManagement.Extensions
+@using CarRentalManagement.Models.ViewModel.Auth
+@model CarRentalManagement.Models.ViewModel.Auth.RegistrationViewModel
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<div class="panel panel-primary">
+<div class="panel-heading">Tạo tài khoản</div>
+<div class="panel-body">
+<form asp-action="Register" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="well well-sm text-danger">@TempData["Message"]</div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Thông tin cá nhân</div>
+                <div class="panel-body">
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="SexEnum" class="control-label"></label>
+                        <select class="form-control" asp-for="SexEnum" asp-items="SexEnum.Male.ToSelectList()"></select>
+                        <span asp-validation-for="SexEnum" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="BirthDate" class="control-label"></label>
+                        <input asp-for="BirthDate" class="form-control">
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control">
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Domicile" class="control-label"></label>
+                        <input asp-for="Domicile" class="form-control">
+                        <span asp-validation-for="Domicile" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="TempAccommodation" class="control-label"></label>
+                        <input asp-for="TempAccommodation" class="form-control">
+                        <span asp-validation-for="TempAccommodation" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="CurrentAddress" class="control-label"></label>
+                        <input asp-for="CurrentAddress" class="form-control">
+                        <span asp-validation-for="CurrentAddress" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Profession" class="control-label"></label>
+                        <input asp-for="Profession" class="form-control">
+                        <span asp-validation-for="Profession" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="WorkPlace" class="control-label"></label>
+                        <input asp-for="WorkPlace" class="form-control">
+                        <span asp-validation-for="WorkPlace" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Avatar" class="control-label"></label>
+                        <input asp-for="Avatar" class="form-control">
+                        <span asp-validation-for="Avatar" class="text-danger"></span>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">Thông tin đăng nhập</div>
+                <div class="panel-body">
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input asp-for="UserName" class="form-control">
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Thông tin CCCD gắn chip</div>
+                <div class="panel-body">
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="IDCard" class="control-label"></label>
+                        <input asp-for="IDCard" class="form-control">
+                        <span asp-validation-for="IDCard" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="DateOfIssue" class="control-label"></label>
+                        <input asp-for="DateOfIssue" class="form-control">
+                        <span asp-validation-for="DateOfIssue" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="PlaceOfIssue" class="control-label"></label>
+                        <input asp-for="PlaceOfIssue" class="form-control">
+                        <span asp-validation-for="PlaceOfIssue" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="ExpirationDate" class="control-label"></label>
+                        <input asp-for="ExpirationDate" class="form-control">
+                        <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="FrontalPhoto" class="control-label"></label>
+                        <input asp-for="FrontalPhoto" class="form-control">
+                        <span asp-validation-for="FrontalPhoto" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="RearPhoto" class="control-label"></label>
+                        <input asp-for="RearPhoto" class="form-control">
+                        <span asp-validation-for="RearPhoto" class="text-danger"></span>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info" id="licenses">
+                <div class="panel-heading">Thông tin bằng lái xe</div>
+                <div class="panel-body">
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LicenseViewModels.Number" class="control-label"></label>
+                        <input asp-for="LicenseViewModels.Number" class="form-control">
+                        <span asp-validation-for="LicenseViewModels.Number" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LicenseViewModels.Grade" class="control-label"></label>
+                        <input asp-for="LicenseViewModels.Grade" class="form-control">
+                        <span asp-validation-for="LicenseViewModels.Grade" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LicenseViewModels.DateOfIssue" class="control-label"></label>
+                        <input asp-for="LicenseViewModels.DateOfIssue" class="form-control">
+                        <span asp-validation-for="LicenseViewModels.DateOfIssue" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LicenseViewModels.ExpirationDate" class="control-label"></label>
+                        <input asp-for="LicenseViewModels.ExpirationDate" class="form-control">
+                        <span asp-validation-for="LicenseViewModels.ExpirationDate" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LicenseViewModels.PlaceOfIssue" class="control-label"></label>
+                        <input asp-for="LicenseViewModels.PlaceOfIssue" class="form-control">
+                        <span asp-validation-for="LicenseViewModels.PlaceOfIssue" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LicenseViewModels.FrontalPhotoFile" class="control-label"></label>
+                        <input type="file" asp-for="LicenseViewModels.FrontalPhotoFile" class="form-control">
+                        <span asp-validation-for="LicenseViewModels.FrontalPhotoFile" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LicenseViewModels.RearPhotoFile" class="control-label"></label>
+                        <input type="file" asp-for="LicenseViewModels.RearPhotoFile" class="form-control">
+                        <span asp-validation-for="LicenseViewModels.RearPhotoFile" class="text-danger"></span>
+                    </fieldset>
+                </div>
+            </div>
+            <div style="float: right">
+                <button class="btn btn-default" type="button" id="cancel">Huỷ</button>
+                <button class="btn btn-primary" type="submit">Đăng ký</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}

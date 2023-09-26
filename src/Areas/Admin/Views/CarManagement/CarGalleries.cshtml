@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CarRentalManagement.Models.ViewModel.CarGallery.EditCarGalleryViewModel
+
+@{
+    ViewBag.Title = "Chỉnh sửa bộ sưu tập ảnh";
+    Layout = "_Layout";
+}
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <form class="row baguetteBox gallery" enctype="multipart/form-data" method="post">
+                <input asp-for="CarId"/>
+                <input asp-for="ReturnUrl"/>
+                <div class="well well-sm text-danger">@TempData["Message"]</div>
+                @for (int i = 0; i < Model.CarGalleryViewModels.Count(); i++)
+                {
+                    <div class="col-md-4">
+                        <a href="@Url.Content("~")@Model.CarGalleryViewModels[i].Url">
+                            <img src="@Model.CarGalleryViewModels[i].ThumbUrl" width="100%"/>
+                        </a>
+                        <input asp-for="ChangeCarGalleryViewModels[i].Id"/>
+                        <fieldset class="edit-image">
+                            <input type="file" asp-for="ChangeCarGalleryViewModels[i].UploadImage" class="form-control"/>
+                            <button type="button" class="btn btn-danger" data-id="@Model.CarGalleryViewModels[i].Id">Xoá</button>
+                        </fieldset>
+                    </div>
+                }
+                <div class="col-md-4">
+                    <label class="control-label" asp-for="UploadImages"></label>
+                    <input type="file" asp-for="UploadImages" multiple="multiple" class="form-control">
+                </div>
+                <div class="col-md-11">
+                    <div style="float: right">
+                        <a class="btn btn-default" id="cancel">Huỷ</a>
+                        <button class="btn btn-primary" type="submit">Lưu</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(function (){
+            $('.btn-danger').click(function (){
+                const id = $(this).data('id');
+                // append id array to form
+                const form = $(this).closest('form');
+                form.append('<input type="hidden" name="DeleteImages" value="'+id+'"/>');
+                $(this).parents('.col-md-4').remove();
+            });
+        });
+    </script>
+}

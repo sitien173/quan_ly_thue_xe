@@ -1,0 +1,133 @@
+﻿@using CarRentalManagement.Services
+@using CarRentalManagement.Extensions
+@model CarRentalManagement.Models.ViewModel.CarManagement.AddCarViewModel
+@inject IBrandService BrandService;
+@inject ICarTypeService CarTypeService;
+@inject IFeatureService FeatureService;
+
+@{
+    ViewBag.Title = "Thêm xe";
+    Layout = "_Layout";
+
+    var brandSelectList = await BrandService.ListAsync<SelectListItem>().ConfigureAwait(false);
+    var carTypeSelectList = await CarTypeService.ListAsync<SelectListItem>().ConfigureAwait(false);
+    var featureSelectList = await FeatureService.ListAsync<SelectListItem>().ConfigureAwait(false);
+}
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <form asp-action="Add" method="post" class="row" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="well well-sm text-danger">@TempData["Message"]</div>
+                <input asp-for="ReturnUrl"/>
+                <div class="col-md-6">
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LicensePlate" class="control-label"></label>
+                        <input asp-for="LicensePlate" class="form-control">
+                        <span asp-validation-for="LicensePlate" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="VIN" class="control-label"></label>
+                        <input asp-for="VIN" class="form-control">
+                        <span asp-validation-for="VIN" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="EngineSerialNumber" class="control-label"></label>
+                        <input asp-for="EngineSerialNumber" class="form-control">
+                        <span asp-validation-for="EngineSerialNumber" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="OverallSize" class="control-label"></label>
+                        <input asp-for="OverallSize" class="form-control">
+                        <span asp-validation-for="OverallSize" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="LongStandard" class="control-label"></label>
+                        <input asp-for="LongStandard" class="form-control">
+                        <span asp-validation-for="LongStandard" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Engine" class="control-label"></label>
+                        <input asp-for="Engine" class="form-control">
+                        <span asp-validation-for="Engine" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="CapacityTank" class="control-label"></label>
+                        <input asp-for="CapacityTank" class="form-control">
+                        <span asp-validation-for="CapacityTank" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="FuelConsumption" class="control-label"></label>
+                        <input asp-for="FuelConsumption" class="form-control">
+                        <span asp-validation-for="FuelConsumption" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="FeatureIds" class="control-label"></label>
+                        <select asp-items="featureSelectList" asp-for="FeatureIds" class="form-control chosen" multiple="multiple"></select>
+                        <span asp-validation-for="FeatureIds" class="text-danger"></span>
+                    </fieldset>
+                </div>
+                <div class="col-md-6">
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Color" class="control-label"></label>
+                        <input asp-for="Color" class="form-control">
+                        <span asp-validation-for="Color" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Seat" class="control-label"></label>
+                        <input asp-for="Seat" class="form-control">
+                        <span asp-validation-for="Seat" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="TransmissionEnum" class="control-label"></label>
+                        <select asp-for="TransmissionEnum" asp-items="TransmissionEnum.Automatic.ToSelectList()" class="form-control chosen"></select>
+                        <span asp-validation-for="TransmissionEnum" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="FuelEnum" class="control-label"></label>
+                        <select asp-for="FuelEnum" asp-items="FuelEnum.Diesel.ToSelectList()" class="form-control chosen"></select>
+                        <span asp-validation-for="FuelEnum" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="BrandId" class="control-label"></label>
+                        <select asp-items="brandSelectList" asp-for="BrandId" class="form-control chosen"></select>
+                        <span asp-validation-for="BrandId" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="CarTypeId" class="control-label"></label>
+                        <select asp-items="carTypeSelectList" asp-for="CarTypeId" class="form-control chosen"></select>
+                        <span asp-validation-for="CarTypeId" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="UploadImages" class="control-label"></label>
+                        <input type="file" multiple="multiple" asp-for="UploadImages" class="form-control"/>
+                        <span asp-validation-for="UploadImages" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="ManufactureYear" class="control-label"></label>
+                        <input asp-for="ManufactureYear" class="form-control"/>
+                        <span asp-validation-for="ManufactureYear" class="text-danger"></span>
+                    </fieldset>
+                </div>
+                <div class="col-md-12">
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </fieldset>
+
+                    <div style="float: right">
+                        <a class="btn btn-default" id="cancel">Huỷ</a>
+                        <button class="btn btn-primary" type="submit">Thêm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

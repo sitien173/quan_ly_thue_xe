@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - CarRentalManagement</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
+    <partial name="_StyleSheetPartial"/>
+</head>
+<body>
+<div id="modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<header class="navbar">
+    <div class="container-fluid">
+        <div class="row">
+            <div id="logo" class="col-xs-12 col-sm-2">
+                <a asp-action="Index" asp-controller="Home">ANK</a>
+            </div>
+            <div id="top-panel" class="col-xs-12 col-sm-10">
+                <div class="row">
+                    <div class="col-xs-8 col-sm-4">
+                        <a href="#" class="show-sidebar">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <div id="search">
+                            <input type="text" placeholder="search"/>
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-8 top-panel-right">
+                        <ul class="nav navbar-nav pull-right panel-menu">
+                            @*<li class="hidden-xs">
+                                <a href="index.html" class="modal-link">
+                                    <i class="fa fa-bell"></i>
+                                    <span class="badge">7</span>
+                                </a>
+                            </li>
+                            <li class="hidden-xs">
+                                <a class="nav-link" href="ajax/calendar.html">
+                                    <i class="fa fa-calendar"></i>
+                                    <span class="badge">7</span>
+                                </a>
+                            </li>
+                            <li class="hidden-xs">
+                                <a href="ajax/page_messages.html" class="nav-link">
+                                    <i class="fa fa-envelope"></i>
+                                    <span class="badge">7</span>
+                                </a>
+                            </li>*@
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
+                                    <i class="fa fa-angle-down pull-right"></i>
+                                    <div class="user-mini pull-right">
+                                        <span class="welcome">Xinchao,</span>
+                                        <span>@User.Identity!.Name</span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i>
+                                            <span class="hidden-sm text">Thông tin tài khoản</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-cog"></i>
+                                            <span class="hidden-sm text">Đổi mật khẩu</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-action="Logout" asp-controller="Auth">
+                                            <i class="fa fa-power-off"></i>
+                                            <span class="hidden-sm text">Đăng xuất</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--End Header-->
+<!--Start Container-->
+<div id="main" class="container-fluid">
+<div class="row">
+<div id="sidebar-left" class="col-md-2">
+<ul class="nav main-menu">
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Khách hàng</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" asp-action="Index" asp-controller="CustomerManagement">Danh sách</a>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">nhân viên</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" asp-action="Index" asp-controller="EmployeeManagement">Danh sách</a>
+        </li>
+        <li>
+            <a class="nav-link" asp-action="Add" asp-controller="EmployeeManagement">Thêm</a>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Xe</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" asp-action="Index" asp-controller="CarManagement">Danh sách</a>
+        </li>
+        <li>
+            <a class="nav-link" asp-action="Add" asp-controller="CarManagement">Thêm</a>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Tính năng</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" asp-action="Index" asp-controller="FeatureManagement">Danh sách</a>
+        </li>
+        <li>
+            <a class="nav-link" asp-action="Add" asp-controller="FeatureManagement">Thêm</a>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Loại xe</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" asp-action="Index" asp-controller="CarTypeManagement">Danh sách</a>
+        </li>
+        <li>
+            <a class="nav-link" asp-action="Add" asp-controller="CarTypeManagement">Thêm</a>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Thương hiệu</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" asp-action="Index" asp-controller="BrandManagement">Danh sách</a>
+        </li>
+        <li>
+            <a class="nav-link" asp-action="Add" asp-controller="BrandManagement">Thêm</a>
+        </li>
+    </ul>
+</li>
+    <li>
+    <a asp-action="Index" asp-controller="RentRequestManagement">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">sổ đặt xe</span>
+    </a>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Hợp đồng</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a asp-action="Index" asp-controller="ContractManagement">
+                <span class="hidden-xs">Danh sách</span>
+            </a>
+        </li>
+        <li>
+            <a asp-action="Add" asp-controller="ContractManagement">
+                <span class="hidden-xs">Thêm</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Hoá đơn</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a asp-action="Index" asp-controller="InvoiceManagement">
+                <span class="hidden-xs">Danh sách</span>
+            </a>
+        </li>
+        <li>
+            <a asp-action="PrepareAdd" asp-controller="InvoiceManagement">
+                <span class="hidden-xs">Thêm</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Biên bản bàn giao xe</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a asp-action="Index" asp-controller="CarTransferAgreementManagement">
+                <span class="hidden-xs">Danh sách</span>
+            </a>
+        </li>
+        <li>
+            <a asp-action="Add" asp-controller="CarTransferAgreementManagement">
+                <span class="hidden-xs">Thêm</span>
+            </a>
+        </li>
+    </ul>
+</li>
+    <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Bảng báo giá</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" asp-action="Index" asp-controller="EstimateManagement">Danh sách</a>
+        </li>
+        <li>
+            <a class="nav-link" asp-action="Add" asp-controller="EstimateManagement">Thêm</a>
+        </li>
+    </ul>
+</li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-bar-chart-o"></i>
+            <span class="hidden-xs">Phụ giá xe</span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="nav-link" asp-action="Index" asp-controller="SurChargeManagement">Danh sách</a>
+            </li>
+            <li>
+                <a class="nav-link" asp-action="Add" asp-controller="SurChargeManagement">Thêm</a>
+            </li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-bar-chart-o"></i>
+            <span class="hidden-xs">Tai nạn</span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="nav-link" asp-action="Index" asp-controller="AccidentManagement">Danh sách</a>
+            </li>
+            <li>
+                <a class="nav-link" asp-action="Add" asp-controller="AccidentManagement">Thêm</a>
+            </li>
+        </ul>
+    </li>
+    
+    <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bar-chart-o"></i>
+                <span class="hidden-xs">Hư hỏng</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="nav-link" asp-action="Index" asp-controller="DamagesManagement">Danh sách</a>
+                </li>
+                <li>
+                    <a class="nav-link" asp-action="Add" asp-controller="DamagesManagement">Thêm</a>
+                </li>
+            </ul>
+        </li>
+    <li>
+    <a asp-controller="Report" asp-action="Index" >
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Báo cáo</span>
+    </a>
+</li>
+</ul>
+</div>
+<!--Start Content-->
+<div id="content" class="col-md-10">
+    @RenderBody()
+</div>
+<!--End Content-->
+</div>
+</div>
+<partial name="_ScriptPartial"/>
+<script src="~/js/dt.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

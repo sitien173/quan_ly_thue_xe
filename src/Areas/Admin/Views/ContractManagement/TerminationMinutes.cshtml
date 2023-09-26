@@ -1,0 +1,104 @@
+﻿@using Microsoft.Extensions.Options
+@using CarRentalManagement.Models.Settings
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CarRentalManagement.Models.ViewModel.ContractManagement.PreviewContractViewModel
+@inject IOptions<CompanySettings> CompanySettings
+@{
+    ViewBag.Title = "Biên bản quyết toán hợp đồng";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid mr-top-20" xmlns="http://www.w3.org/1999/html">
+    <div class="panel panel-primary">
+        <div class="panel-heading">BIÊN BẢN QUYẾT TOÁN HỢP ĐỒNG</div>
+        <div class="panel-body">
+            <div id="contentEdit">
+                <p style="text-align:center">
+                    <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br></strong><strong>Độc lập - Tự do - Hạnh phúc<br></strong><strong>——————</strong>
+                </p>
+                <p style="text-align:center">
+                    <strong class="text-capitalize">@ViewBag.Title</strong>
+                </p>
+                <p style="text-align:center">
+                    <em>(Số: @Model.Id/HĐTX)</em>
+                </p>
+                <p>Căn cứ vào hợp đồng thuê xe số: @Model.Id</p>
+                <p>
+                    <em>Hôm nay, ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year, tại địa chỉ @CompanySettings.Value.Address</em>
+                </p>
+                <p>Chúng tôi gồm có:</p>
+                <div class="row">
+                    <div class="col-xs-6 col-md-12">
+                        <div>
+                            <strong>Bên cho thuê (Bên A):</strong>
+                            <p>Tên công ty: @CompanySettings.Value.Name - Mã số thuế: @CompanySettings.Value.TaxCode</p>
+                            <p>Địa chỉ: @CompanySettings.Value.Address</p>
+                            <p>Đại diện bởi Ông/Bà: @CompanySettings.Value.Representative - Chức vụ: @CompanySettings.Value.RepresentativePosition</p>
+                            <p>Điện thoại: @CompanySettings.Value.Phone</p>
+                            <p>Email: @CompanySettings.Value.Email</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-12">
+                        <div>
+                            <strong>Bên thuê (Bên B):</strong>
+                            <p>Họ và tên: @Model.CustomerDetail.FullName</p>
+                            <p>Sinh ngày: @Model.CustomerDetail.BirthDate.ToString(Constant.DateFormat)</p>
+                            <p>CMND/Thẻ CCCD/Hộ chiếu số: @Model.CustomerDetail.IDCard - Cấp ngày: @Model.CustomerDetail.DateOfIssue.ToString(Constant.DateFormat) - Nơi cấp: @Model.CustomerDetail.PlaceOfIssue</p>
+                            <p>Địa chỉ thường trú: @Model.CustomerDetail.Domicile</p>
+                            <p>Địa chỉ tạm trú: @Model.CustomerDetail.TempAccommodation</p>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <strong>
+                        @{
+                            var createdAt = DateTime.Parse(Model.CreatedAt);
+                        }
+                        Hai bên đồng ý thống nhất quyết toán và thanh lý Hợp đồng số: @Model.Id ký ngày @createdAt.Day tháng @createdAt.Month năm @createdAt.Year với các nội dung sau:
+                    </strong>
+                </p>
+                <p>1/ Bên B đã thực hiện đầy đủ các công việc được thoả thuận trong hợp đồng số @Model.Id;</p>
+                <p>
+                    2/ Hai bên thống nhất quyết toán hợp đồng số @Model.Id với tổng trị giá quyết toán của hợp đồng là: <span class="price">@Model.Total</span>
+                </p>
+                <div>
+                    3/ Thanh toán:
+                    <p>- Tổng số tiền: <span class="price">@Model.Total</span> </p>
+                    <p>- Bên B đã đưa trước: <span class="price">@Model.Prepay</span> </p>
+                    <p>- Còn lại: <span class="price">@Model.Debt</span></p>
+                    <p>Bên B đồng ý thanh toán cho Bên A khoản còn thiếu là: <span class="price">@Model.Debt</span></p>
+
+                </div>
+                <p>
+                    4/ Hợp đồng số @Model.Id hết hiệu lực kể từ ngày hôm nay, bên A xuất hoá đơn thanh toán cho bên B.
+                </p>
+                <p>
+                    <em>Biên bản này được lập thành hai (02) bản có giá trị như nhau, mỗi bên giữ một (01) bản.</em>
+                </p>
+                <div class="row">
+                    <div class="col-xs-6 text-center">
+                        <p>
+                            <strong>ĐẠI DIỆN BÊN A</strong><strong> </strong>
+                        </p>
+                        <p>
+                            <em>(Ký ghi rõ họ tên, đóng dấu)</em>
+                        </p>
+                    </div>
+
+                    <div class="col-xs-6 text-center">
+                        <p>
+                            <strong>ĐẠI DIỆN BÊN B</strong><strong> </strong>
+                        </p>
+                        <p>
+                            <em>(Ký ghi rõ họ tên, đóng dấu)</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            <a type="button" class="btn btn-default" asp-action="Index">Thoát</a>
+            <button type="button" class="btn btn-primary print" data-contentId="contentEdit">In</button>
+        </div>
+    </div>
+</div>

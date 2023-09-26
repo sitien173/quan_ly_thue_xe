@@ -1,0 +1,211 @@
+﻿@using CarRentalManagement.Models.ViewModel.Car
+@using CarRentalManagement.Controllers
+@using CarRentalManagement.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CarRentalManagement.Models.ViewModel.Car.RentCarViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+    CarDetailViewModel carDetailViewModel = (CarDetailViewModel)ViewData[CarController.CarDetailData]!;
+    var estimateItems = carDetailViewModel.EstimatesList.Select(x => new SelectListItem()
+    {
+        Text = x.RentalMethod.GetDescription(),
+        Value = x.Id.ToString()
+    });
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="panel panel-info">
+                <div class="panel-heading">Hình ảnh</div>
+                <div class="panel-body row baguetteBox gallery">
+                    @foreach (var image in carDetailViewModel.CarPhotoGalleries)
+                    {
+                        <div class="col-md-3" style="padding: 1px">
+                            <a href="@Url.Content("~")@image.Url">
+                                <img src="@image.ThumbUrl" width="100%"/>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Đặc điểm</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <tbody>
+
+                        <tr>
+                            <th scope="row">Tên xe</th>
+                            <td>@carDetailViewModel.Name</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Biển số</th>
+                            <td>@carDetailViewModel.LicensePlate</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Màu sắc</th>
+                            <td>@carDetailViewModel.Color</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Hộp số</th>
+                            <td>@carDetailViewModel.TransmissionEnum.GetDescription()</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Nhiên liệu</th>
+                            <td>@carDetailViewModel.FuelEnum.GetDescription()</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Số chỗ</th>
+                            <td>@carDetailViewModel.Seat</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Năm sản xuất</th>
+                            <td>@carDetailViewModel.ManufactureYear</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Hãng xe</th>
+                            <td>@carDetailViewModel.BrandName</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Loại xe</th>
+                            <td>@carDetailViewModel.CarTypeName</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Kích thước tổng thể</th>
+                            <td>@carDetailViewModel.OverallSize</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Chiều dài cơ sở</th>
+                            <td>@carDetailViewModel.LongStandard</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Động cơ</th>
+                            <td>@carDetailViewModel.Engine</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Dung tích bình xăng</th>
+                            <td>@carDetailViewModel.CapacityTank</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Tiêu thụ nhiên liệu</th>
+                            <td>@carDetailViewModel.FuelConsumption</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Tính năng</div>
+                <div class="panel-body text-center">
+                    @foreach (var feature in carDetailViewModel.CarFeatures)
+                    {
+                        <div class="btn btn-default" type="button">
+                            <span class="badge">@feature</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Mô tả</div>
+                <div class="panel-body">
+                    <p>@Html.Raw(carDetailViewModel.Description)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-info">
+                <div class="panel-heading">Bảng giá và phụ phí</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Loại dịch vụ</th>
+                            <th scope="col">Đơn giá</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var estimate in carDetailViewModel.EstimatesList)
+                        {
+                            <tr>
+                                <th scope="row">@estimate.RentalMethod.GetDescription()</th>
+                                <td class="price">@estimate.UnitPrice</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                    <hr>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Loại phụ phí</th>
+                            <th scope="col">Đơn giá</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var surcharge in carDetailViewModel.SurChargeList)
+                        {
+                            <tr>
+                                <th scope="row">@surcharge.Name</th>
+                                <td class="price">@surcharge.Price</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Đặt xe</div>
+                <div class="panel-body">
+                    <form asp-action="Rent" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="text-info text-center">@TempData[CarController.Message]</div>
+                        <input asp-for="CustomerId">
+                        <input asp-for="CarId"/>
+                        
+                        <fieldset class="form-floating mb-3">
+                            <label asp-for="StartDate" class="control-label"></label>
+                            <input asp-for="StartDate" class="form-control">
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </fieldset>
+                        <fieldset class="form-floating mb-3">
+                            <label asp-for="EndDate" class="control-label"></label>
+                            <input asp-for="EndDate" class="form-control">
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </fieldset>
+                        <fieldset class="form-floating mb-3">
+                            <label asp-for="EstimateId" class="control-label"></label>
+                            <select asp-for="EstimateId" asp-items="estimateItems" class="form-control chosen"></select>
+                            <span asp-validation-for="EstimateId" class="text-danger"></span>
+                        </fieldset>
+                        <fieldset class="form-floating mb-3">
+                            <label asp-for="Note" class="control-label"></label>
+                            <textarea asp-for="Note" class="form-control editor"></textarea>
+                            <span asp-validation-for="Note" class="text-danger"></span>
+                        </fieldset>
+                        <div class="text-right">
+                            <button class="btn btn-primary" type="submit">Gửi yêu cầu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

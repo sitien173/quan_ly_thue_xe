@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <partial name="_StyleSheetPartial"/>
+</head>
+<body>
+
+@RenderBody()
+
+<partial name="_ScriptPartial"/>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,98 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+fieldset {
+    margin: 2px 0;
+    padding: 2px 0;
+}
+
+label.required:after {
+    content: " *";
+    color: red;
+}
+
+.d-none {
+    display: none;
+}
+
+textarea {
+    min-height: 250px;
+}
+.chosen-container-single .chosen-single{
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+}
+
+.chosen-container-multi .chosen-choices{
+    border-radius: 4px;
+}
+.chosen-container-multi .chosen-choices li.search-field input[type=text] {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+.edit-image {
+    display: flex;
+    margin: 3px 0 10px 0;
+}
+.close {
+    float: right;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 0.5;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: inherit;
+}
+
+.mr-top-20 {
+    margin-top: 20px;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper, input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button {
+    color: #fff;
+    position: relative;
+}
+
+input[type="date"]::-webkit-datetime-edit-year-field{
+    position: absolute !important;
+    border-left: 1px solid #000;
+    padding: 2px;
+    color:#000;
+    left: 54px;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field{
+    position: absolute !important;
+    border-left: 1px solid #000;
+    padding: 2px;
+    color:#000;
+    left: 26px;
+}
+
+input[type="date"]::-webkit-datetime-edit-day-field{
+    position: absolute !important;
+    color:#000;
+    padding: 2px;
+    left: 4px;
+}

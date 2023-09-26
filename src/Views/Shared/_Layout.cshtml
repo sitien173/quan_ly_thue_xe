@@ -1,0 +1,144 @@
+﻿@using CarRentalManagement.Models.Settings
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@inject IOptions<CompanySettings> CompanySettings
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - CarRentalManagement</title>
+    <partial name="_StyleSheetPartial"/>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                    <img alt="Brand" src="~/img/logo.png">
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a asp-action="Index" asp-controller="Home">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="AboutUs">Về chúng tôi</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Privacy">Chính sách</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="Contact">Liên hệ</a>
+                    </li>
+                </ul>
+                @if (Context.User.Identity is {IsAuthenticated: true})
+                {
+                    <div class="nav navbar-nav navbar-right dropdown" style="margin-top: 10px">
+                        <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                            <span class="caret"></span>
+                        </span>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li>
+                                <a asp-action="FollowCars" asp-controller="Customer"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Xe đã lưu</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Customer" asp-action="EditInformation"><i class="fa fa-address-card-o" aria-hidden="true"></i> Thông tin tài khoản</a>
+                            </li>
+                            <li>
+                                <a asp-action="ChangePassword" asp-controller="Auth"><i class="fa fa-key" aria-hidden="true"></i> Đổi mật khẩu</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a asp-action="Logout" asp-controller="Auth"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a asp-controller="Auth" asp-action="Login"><i class="fa fa-sign-in" aria-hidden="true"></i> Đăng nhập</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a asp-controller="Auth" asp-action="Register"><i class="fa fa-user-plus" aria-hidden="true"></i> Đăng ký</a>
+                        </li>
+                    </ul>
+                }
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>
+<div class="container-fluid">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="container-fluid navbar-default">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Về chúng tôi</h4>
+                <p>
+                    @CompanySettings.Value.Name là một công ty cho thuê xe ô tô hàng đầu. Chúng tôi cung cấp các dịch vụ cho thuê xe ô tô cho cá nhân và doanh nghiệp trên toàn quốc.
+                </p>
+                <p>
+                    Chúng tôi có một đội ngũ nhân viên chuyên nghiệp và giàu kinh nghiệm trong lĩnh vực cho thuê xe ô tô. Chúng tôi cam kết cung cấp cho khách hàng của mình các dịch vụ thuê xe ô tô tốt nhất với giá cả hợp lý và dịch vụ khách hàng tốt nhất.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h4>Liên hệ với chúng tôi</h4>
+                <ul>
+                    <li>Tên công ty: @CompanySettings.Value.Name</li>
+                    <li>Địa chỉ: @CompanySettings.Value.Address</li>
+                    <li>Website: @CompanySettings.Value.Website</li>
+                    <li>Email: @CompanySettings.Value.Email</li>
+                    <li>Số điện thoại: @CompanySettings.Value.Phone</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h4>Theo dõi chúng tôi</h4>
+                <ul class="list-inline">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<partial name="_ScriptPartial"/>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

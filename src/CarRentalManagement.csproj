@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
+      <PackageReference Include="AsyncAwaitBestPractices" Version="6.0.6" />
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+      <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+      <PackageReference Include="EntityFrameworkProfiler.Appender" Version="6.0.6040" />
+      <PackageReference Include="MailKit" Version="3.5.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.1.23111.4">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="7.3.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-preview.1.23111.4" />
+      <PackageReference Include="MimeKit" Version="3.5.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3-beta1" />
+      <PackageReference Include="OneOf" Version="3.0.223" />
+      <PackageReference Include="Scrutor" Version="4.2.1" />
+      <PackageReference Include="Serilog" Version="3.0.0-dev-01884" />
+      <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
+      <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="7.18.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\images" />
+      <Folder Include="wwwroot\uploads\thumbs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Admin\Views\CarTransferAgreementManagement\Add.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\CarTransferAgreementManagement\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\CarTypeManagement\Add.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\CarTypeManagement\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\CarTypeManagement\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\ContractManagement\Add.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\ContractManagement\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\FeatureManagement\Add.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\FeatureManagement\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\FeatureManagement\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\InvoiceManagement\Add.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\InvoiceManagement\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\RentRequestManagement\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\RentRequestManagement\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\SurChargeManagement\Add.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\SurChargeManagement\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\SurChargeManagement\Index.cshtml" />
+      <AdditionalFiles Include="Views\Auth\Login.cshtml" />
+      <AdditionalFiles Include="Views\Auth\Register.cshtml" />
+      <AdditionalFiles Include="Views\Auth\ResetPassword.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\Customer\Views\Auth\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Customer\Views\Auth\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Customer\Views\Auth\ResetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\QuanTri\Views\Auth\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\CarManagement\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\Areas\Admin\BrandManagement\Index.js" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\EmployeeManagement\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\EmployeeManagement\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\PaymentVoucherManagement\Add.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\PaymentVoucherManagement\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\PaymentVoucherManagement\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\PaymentVoucherManagement\PreviewPaymentVoucher.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\CheckInOutCarManagement\Add.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\CheckInOutCarManagement\Index.cshtml" />
+    </ItemGroup>
+
+</Project>

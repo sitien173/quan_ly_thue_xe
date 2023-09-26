@@ -1,0 +1,63 @@
+﻿@using CarRentalManagement.Services
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CarRentalManagement.Extensions
+@model CarRentalManagement.Models.ViewModel.CarTransferAgreementManagement.AddCarTransferAgreementViewModel
+@inject IContractService ContractService
+@inject ICarService CarService
+@{
+    ViewBag.Title = "Thêm biên bản bàn giao xe";
+    Layout = "_Layout";
+
+    var contractItems = await ContractService.ListAsync<SelectListItem>().ConfigureAwait(false);
+    var carItems = await CarService.ListAsync<SelectListItem>().ConfigureAwait(false);
+}
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <form asp-action="Add" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="well well-sm text-danger">@TempData["Message"]</div>
+                <input type="hidden" asp-for="ReturnUrl"/>
+                <input asp-for="CreatedBy"/>
+                <input asp-for="CreatedAt"/>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="ContractId" class="control-label"></label>
+                    <select asp-for="ContractId" asp-items="contractItems" class="form-control chosen"></select>
+                    <span asp-validation-for="ContractId" class="text-danger"></span>
+                </fieldset>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="CarId" class="control-label"></label>
+                    <select asp-for="CarId" asp-items="carItems" class="form-control chosen"></select>
+                    <span asp-validation-for="CarId" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="CheckInOutEnum" class="control-label"></label>
+                    <select asp-for="CheckInOutEnum" asp-items="CheckInOutEnum.In.ToSelectList()" class="form-control chosen"></select>
+                    <span asp-validation-for="CheckInOutEnum" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="TestListDetail" class="control-label"></label>
+                    <textarea asp-for="TestListDetail" class="form-control"></textarea>
+                    <span asp-validation-for="TestListDetail" class="text-danger"></span>
+                </fieldset>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="EquipmentAttend" class="control-label"></label>
+                    <textarea asp-for="EquipmentAttend" class="form-control"></textarea>
+                    <span asp-validation-for="EquipmentAttend" class="text-danger"></span>
+                </fieldset>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="VehicleProfileSetAttend" class="control-label"></label>
+                    <textarea asp-for="VehicleProfileSetAttend" class="form-control"></textarea>
+                    <span asp-validation-for="VehicleProfileSetAttend" class="text-danger"></span>
+                </fieldset>
+                <div style="float: right">
+                    <a class="btn btn-default" id="cancel">Huỷ</a>
+                    <button class="btn btn-primary" type="submit">In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

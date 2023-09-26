@@ -1,0 +1,89 @@
+﻿@using CarRentalManagement.Extensions
+@model CarRentalManagement.Models.ViewModel.ContractManagement.AddContractViewModel
+
+@{
+    ViewBag.Title = "Thêm chi tiết hợp đồng";
+    Layout = "_Layout";
+}
+<div class="container-fluid mr-top-20">
+    <form asp-action="Add" method="post" class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="well well-sm text-danger">@TempData["Message"]</div>
+        <div class="panel-body">
+            <div class="panel panel-info">
+                <div class="panel-heading">Thông tin hợp đồng</div>
+                <div class="panel-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="ReturnUrl"/>
+                    <input asp-for="CreatedBy"/>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="CustomerId" class="control-label"></label>
+                        <select asp-for="CustomerId" asp-items="Model.CustomerSelectListItems" class="form-control chosen"></select>
+                        <span asp-validation-for="CustomerId" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="TotalCarRent" class="control-label"></label>
+                        <input asp-for="TotalCarRent" class="form-control"/>
+                        <span asp-validation-for="TotalCarRent" class="text-danger"></span>
+                    </fieldset>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Note" class="control-label"></label>
+                        <textarea asp-for="Note" class="form-control"></textarea>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Thông tin chi tiết hợp đồng</div>
+                <div class="panel-body">
+                    @for (int i = 0; i < Model.ContractDetails.Count; i++)
+                    {
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Chi tiết hợp đồng @(i + 1)
+                            </div>
+                            <div class="panel-body">
+                                <fieldset class="form-floating mb-3">
+                                    <label asp-for="ContractDetails[i].CarId" class="control-label"></label>
+                                    <select asp-for="ContractDetails[i].CarId" asp-items="Model.CarSelectListItems" class="form-control chosen"></select>
+                                    <span asp-validation-for="ContractDetails[i].CarId" class="text-danger"></span>
+                                </fieldset>
+
+                                <fieldset class="form-floating mb-3">
+                                    <label asp-for="ContractDetails[i].RentalDate" class="control-label"></label>
+                                    <input asp-for="ContractDetails[i].RentalDate" class="form-control"/>
+                                    <span asp-validation-for="ContractDetails[i].RentalDate" class="text-danger"></span>
+                                </fieldset>
+
+                                <fieldset class="form-floating mb-3">
+                                    <label asp-for="ContractDetails[i].ReturnedDate" class="control-label"></label>
+                                    <input asp-for="ContractDetails[i].ReturnedDate" class="form-control"/>
+                                    <span asp-validation-for="ContractDetails[i].ReturnedDate" class="text-danger"></span>
+                                </fieldset>
+
+                                <fieldset class="form-floating mb-3">
+                                    <label asp-for="ContractDetails[i].Amount" class="control-label"></label>
+                                    <input asp-for="ContractDetails[i].Amount" class="form-control"/>
+                                    <span asp-validation-for="ContractDetails[i].Amount" class="text-danger"></span>
+                                </fieldset>
+
+                                <fieldset class="form-floating mb-3">
+                                    <label asp-for="ContractDetails[i].RentalMethod" class="control-label"></label>
+                                    <select asp-for="ContractDetails[i].RentalMethod" asp-items="RentalMethodEnum.Daily.ToSelectList()" class="form-control"></select>
+                                    <span asp-validation-for="ContractDetails[i].RentalMethod" class="text-danger"></span>
+                                </fieldset>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="text-right">
+                <a class="btn btn-default" id="cancel">Trở về</a>
+                <button class="btn btn-primary" type="submit">In hợp đồng và lưu</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,39 @@
+﻿@model CarRentalManagement.Models.ViewModel.CarTypeManagement.AddCarTypeViewModel
+@{
+    ViewBag.Title = "Thêm loại xe";
+    Layout = "_Layout";
+}
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <form asp-action="Add" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="well well-sm text-danger">@TempData["Message"]</div>
+                <input asp-for="ReturnUrl"/>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </fieldset>
+
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Icon" class="control-label"></label>
+                    <input asp-for="Icon" class="form-control">
+                    <span asp-validation-for="Icon" class="text-danger"></span>
+                </fieldset>
+
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </fieldset>
+
+                <div style="float: right">
+                    <a class="btn btn-default" id="cancel">Huỷ</a>
+                    <button class="btn btn-primary" type="submit">Thêm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

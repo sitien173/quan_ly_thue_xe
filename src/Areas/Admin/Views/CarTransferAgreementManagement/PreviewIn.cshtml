@@ -1,0 +1,124 @@
+﻿@using Microsoft.Extensions.Options
+@using CarRentalManagement.Models.Settings
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CarRentalManagement.Models.ViewModel.CarTransferAgreementManagement.PreviewCarTransferAgreementViewModel
+@inject IOptions<CompanySettings> CompanySettings
+@{
+    ViewBag.Title = "Biên bản bàn giao xe";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid mr-top-20" xmlns="http://www.w3.org/1999/html">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <div id="contentEdit">
+                <p style="text-align:center">
+                    <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br></strong><strong>Độc lập - Tự do - Hạnh phúc<br></strong><strong>——————</strong>
+                </p>
+                <p style="text-align:center">
+                    <strong class="text-capitalize">@ViewBag.Title</strong>
+                </p>
+                <p style="text-align:center">
+                    <em>(Số: @Model.Id/HĐTX)</em>
+                </p>
+                <p>Căn cứ vào hợp đồng thuê xe số: @Model.ContractId</p>
+                <p>
+                    <em>Hôm nay, ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year, tại địa chỉ @CompanySettings.Value.Address</em>
+                </p>
+                <p>Chúng tôi gồm có:</p>
+                <div class="row">
+                    <div class="col-xs-6 col-md-12">
+                        <div>
+                            <strong>Bên cho thuê (Bên A):</strong>
+                            <p>Tên công ty: @CompanySettings.Value.Name - Mã số thuế: @CompanySettings.Value.TaxCode</p>
+                            <p>Địa chỉ: @CompanySettings.Value.Address</p>
+                            <p>Đại diện bởi Ông/Bà: @CompanySettings.Value.Representative - Chức vụ: @CompanySettings.Value.RepresentativePosition</p>
+                            <p>Điện thoại: @CompanySettings.Value.Phone</p>
+                            <p>Email: @CompanySettings.Value.Email</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-12">
+                        <div>
+                            <strong>Bên thuê (Bên B):</strong>
+                            <p>Họ và tên: @Model.CustomerDetail.FullName</p>
+                            <p>Sinh ngày: @Model.CustomerDetail.BirthDate.ToString(Constant.DateFormat)</p>
+                            <p>CMND/Thẻ CCCD/Hộ chiếu số: @Model.CustomerDetail.IDCard - Cấp ngày: @Model.CustomerDetail.DateOfIssue.ToString(Constant.DateFormat) - Nơi cấp: @Model.CustomerDetail.PlaceOfIssue</p>
+                            <p>Địa chỉ thường trú: @Model.CustomerDetail.Domicile</p>
+                            <p>Địa chỉ tạm trú: @Model.CustomerDetail.TempAccommodation</p>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <em>Cùng tiến hành kiểm tra và đồng ý ký vào biên bản này bàn giao lại cho bên cho thuê một (01) xe @Model.CarDetail.Name như dưới đây:</em>
+                </p>
+
+                <div>
+                    <p>1. Thông tin xe</p>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên xe</th>
+                            <th scope="col">Loại xe</th>
+                            <th scope="col">Biển số</th>
+                            <th scope="col">Số máy</th>
+                            <th scope="col">Số khung</th>
+                            <th scope="col">Thương hiệu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>@Model.CarDetail.Name</td>
+                            <td>@Model.CarDetail.CarTypeName</td>
+                            <td>@Model.CarDetail.LicensePlate</td>
+                            <td>@Model.CarDetail.EngineSerialNumber</td>
+                            <td>@Model.CarDetail.VIN</td>
+                            <td>@Model.CarDetail.BrandName</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        <strong>2. Danh mục kiểm tra</strong>
+                    </p>
+                    @Html.Raw(Model.TestListDetail)
+                    <p>
+                        <strong>3. Trang bị theo xe</strong>
+                    </p>
+                    @Html.Raw(Model.EquipmentAttend)
+                    <p>
+                        <strong>4. Hồ sơ đi kèm</strong>
+                    </p>
+                    @Html.Raw(Model.VehicleProfileSetAttend)
+                </div>
+                <p>
+                    <em>Biên bản này được lập thành hai (02) bản có giá trị như nhau, mỗi bên giữ một (01) bản.</em>
+                </p>
+                <div class="row">
+                    <div class="col-xs-6 text-center">
+                        <p>
+                            <strong>ĐẠI DIỆN BÊN GIAO</strong><strong> </strong>
+                        </p>
+                        <p>
+                            <em>(Ký ghi rõ họ tên, đóng dấu)</em>
+                        </p>
+                    </div>
+
+                    <div class="col-xs-6 text-center">
+                        <p>
+                            <strong>ĐẠI DIỆN BÊN NHẬN</strong><strong> </strong>
+                        </p>
+                        <p>
+                            <em>(Ký ghi rõ họ tên, đóng dấu)</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            <a type="button" class="btn btn-default" asp-action="Index">Thoát</a>
+            <button type="button" class="btn btn-primary print" data-contentId="contentEdit">In</button>
+        </div>
+    </div>
+</div>

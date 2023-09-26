@@ -1,0 +1,120 @@
+﻿@using CarRentalManagement.Extensions
+@using CarRentalManagement.Services
+@using CarRentalManagement.Controllers
+@using CarRentalManagement.Common
+@inject IBrandService BrandService
+@inject ICarTypeService CarTypeService
+@inject IFeatureService FeatureService
+@model CarRentalManagement.Models.ViewModel.Home.CarFilterViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+
+    var brandItems = await BrandService.ListAsync<SelectListItem>().ConfigureAwait(false);
+    var carTypeItems = await CarTypeService.ListAsync<SelectListItem>().ConfigureAwait(false);
+    var featureItems = await FeatureService.ListAsync<SelectListItem>().ConfigureAwait(false);
+
+    var carFilter = ViewData[HomeController.Key] as Page<CarRentalManagement.Models.ViewModel.Home.CarFilterResponseViewModel>;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <form asp-action="Index" method="post" asp-controller="Home" asp-area="" class="col-md-2">
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="TxtText"></label>
+                <input class="form-control" asp-for="TxtText"/>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="TransmissionEnum"></label>
+                <select data-placeholder="Chọn truyền động" asp-for="TransmissionEnum" class="form-control chosen" asp-items="@TransmissionEnum.Automatic.ToSelectList()"></select>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="FuelEnum"></label>
+                <select data-placeholder="Chọn nhiên liệu" asp-for="FuelEnum" class="form-control chosen" asp-items="@FuelEnum.Diesel.ToSelectList()"></select>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="Seat"></label>
+                <input class="form-control" asp-for="Seat"/>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="ManufactureYear"></label>
+                <input class="form-control" asp-for="ManufactureYear"/>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="BrandId"></label>
+                <select data-placeholder="Chọn thương hiệu" asp-for="BrandId" class="form-control chosen" asp-items="brandItems"></select>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="CarTypeId"></label>
+                <select data-placeholder="Chọn loại xe" asp-for="CarTypeId" class="form-control chosen" asp-items="carTypeItems"></select>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="FeatureIds"></label>
+                <select data-placeholder="Chọn tính năng" asp-for="FeatureIds" class="form-control chosen" multiple="multiple" asp-items="featureItems"></select>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="RentalDate"></label>
+                <input asp-for="RentalDate" class="form-control"/>
+            </fieldset>
+            <fieldset class="form-group-sm mb-3">
+                <label asp-for="ReturnedDate"></label>
+                <input asp-for="ReturnedDate" class="form-control"/>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Lọc</button>
+        </form>
+        <div class="col-md-9">
+            <div class="row baguetteBox gallery">
+                @foreach (var item in carFilter.Data)
+                {
+                    <div class="col-md-3">
+                        <div class="panel panel-info" style="background-color: #d8d8d8">
+                            <a asp-action="Index" asp-controller="Car" asp-route-id="@item.Id">
+                                <img src="@item.ImageUrl" width="100%"/>
+                            </a>
+                            <div class="panel-body text-center">
+                                <span class="badge">@item.Name</span>
+                                <span class="badge">@item.Color</span>
+                                <span class="badge">@item.Seat chỗ</span>
+                                <span class="badge">@item.BrandCode</span>
+                                <span class="badge">@item.CarTypeName</span>
+                                <span class="badge">@item.LicensePlate</span>
+                                <span class="badge">@item.TransmissionEnum.GetDescription()</span>
+                                <span class="badge">@item.FuelEnum.GetDescription()</span>
+
+                            </div>
+                            <div class="panel-body text-right">
+                                <a class="btn btn-success" href="" data-ajax="true" data-ajax-url="@Url.Action("Follow","Car", new {item.Id})" data-ajax-success="alert('Lưu thành công')">Lưu</a>
+                                <a class="btn btn-primary" asp-controller="Car" asp-action="Index" asp-route-id="@item.Id">Chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" asp-action="Index" asp-route-pageNumber="@Math.Max(1, carFilter.PageNumber - 1)" asp-route-pageSize="@carFilter.PageSize">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @for (var i = 1; i <= carFilter.TotalPages; i++)
+                        {
+                            <li class="@(i == carFilter.PageNumber ? "active" : "")">
+                                <a asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@carFilter.PageSize">
+                                    @i
+                                </a>
+                            </li>
+                        }
+
+                        <li>
+                            <a asp-action="Index" asp-route-pageNumber="@(carFilter.PageNumber >= carFilter.TotalPages ? carFilter.PageNumber : (carFilter.PageNumber + 1))" asp-route-pageSize="@carFilter.PageSize">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

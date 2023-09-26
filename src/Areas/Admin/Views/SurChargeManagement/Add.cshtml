@@ -1,0 +1,38 @@
+﻿@inject CarRentalManagement.Services.ICarTypeService CarTypeService;
+@model CarRentalManagement.Models.ViewModel.SurChargeManagement.AddSurChargeViewModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Thêm phụ giá xe";
+    var carTypeSelectList = await CarTypeService.ListAsync<SelectListItem>().ConfigureAwait(false);
+}
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <form asp-action="Add" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="well well-sm text-danger">@TempData["Message"]</div>
+                <input asp-for="ReturnUrl"/>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="CarTypeId" class="control-label"></label>
+                    <select asp-for="CarTypeId" asp-items="carTypeSelectList" class="form-control chosen"></select>
+                    <span asp-validation-for="CarTypeId" class="text-danger"></span>
+                </fieldset>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control"/>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </fieldset>
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control price"/>
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </fieldset>
+                <div style="float: right">
+                    <a class="btn btn-default" id="cancel">Huỷ</a>
+                    <button class="btn btn-primary" type="submit">Thêm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

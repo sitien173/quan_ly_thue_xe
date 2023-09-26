@@ -1,0 +1,31 @@
+﻿@using Microsoft.Extensions.Options
+@using CarRentalManagement.Models.Settings
+@inject IOptions<CompanySettings> CompanySettings
+<div class="container">
+    <h1>Về chúng tôi</h1>
+    <p>
+      @CompanySettings.Value.Name là một công ty cho thuê xe ô tô hàng đầu. Chúng tôi cung cấp các dịch vụ cho thuê xe ô tô cho cá nhân và doanh nghiệp trên toàn quốc.
+    </p>
+    <p>
+      Chúng tôi có một đội ngũ nhân viên chuyên nghiệp và giàu kinh nghiệm trong lĩnh vực cho thuê xe ô tô. Chúng tôi cam kết cung cấp cho khách hàng của mình các dịch vụ thuê xe ô tô tốt nhất với giá cả hợp lý và dịch vụ khách hàng tốt nhất.
+    </p>
+    <h2>Tầm nhìn</h2>
+    <p>
+      Tầm nhìn của @CompanySettings.Value.Name là trở thành công ty cho thuê xe ô tô hàng đầu trên thị trường, cung cấp cho khách hàng của mình các dịch vụ thuê xe ô tô chất lượng cao và dịch vụ khách hàng tốt nhất.
+    </p>
+    <h2>Sứ mệnh</h2>
+    <p>
+      Sứ mệnh của @CompanySettings.Value.Name là cung cấp cho khách hàng của mình các dịch vụ cho thuê xe ô tô tốt nhất, với giá cả hợp lý và dịch vụ khách hàng tốt nhất, để giúp họ di chuyển một cách tiện lợi và an toàn.
+    </p>
+    <h2>Liên hệ với chúng tôi</h2>
+    <p>
+      Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào liên quan đến @CompanySettings.Value.Name, vui lòng liên hệ với chúng tôi theo thông tin sau:
+    </p>
+    <ul>
+      <li>Tên công ty: @CompanySettings.Value.Name</li>
+      <li>Địa chỉ: @CompanySettings.Value.Address</li>
+      <li>Website: @CompanySettings.Value.Website</li>
+      <li>Email: @CompanySettings.Value.Email</li>
+      <li>Số điện thoại: @CompanySettings.Value.Phone</li>
+    </ul>
+  </div>

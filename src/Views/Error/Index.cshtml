@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "_Layout";
+    ViewBag.Title = "Error";
+}
+
+<div class="error-template">
+    <h1>Oops!</h1>
+    <h2>An error occurred while processing your request.</h2>
+    <div class="error-details">
+        @if (Model.ShowRequestId)
+        {
+            <p>
+                <strong>Request ID:</strong> <code>@Model.RequestId</code>
+            </p>
+        }
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <p>
+                <strong>Message:</strong> @Model.Message
+            </p>
+        }
+    </div>
+    <div class="error-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span> Take Me Home</a>
+    </div>
+</div>

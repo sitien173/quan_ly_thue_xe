@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CarRentalManagement.Extensions
+@model CarRentalManagement.Models.ViewModel.Customer.CarFollowViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12">
+        <div class="row baguetteBox gallery">
+            @foreach (var item in Model.CarDetailViewModels)
+            {
+                <div class="col-md-3">
+                    <div class="panel panel-info" style="background-color: #d8d8d8">
+                        <a asp-action="Index" asp-controller="Car" asp-route-id="@item.Id">
+                            <img src="@item.ImageUrl" width="100%"/>
+                        </a>
+                        <div class="panel-body text-center">
+                            <span class="badge">@item.Name</span>
+                            <span class="badge">@item.Color</span>
+                            <span class="badge">@item.Seat chỗ</span>
+                            <span class="badge">@item.BrandCode</span>
+                            <span class="badge">@item.CarTypeName</span>
+                            <span class="badge">@item.LicensePlate</span>
+                            <span class="badge">@item.TransmissionEnum.GetDescription()</span>
+                            <span class="badge">@item.FuelEnum.GetDescription()</span>
+        
+                        </div>
+                        <div class="panel-body text-right">
+                            <a class="btn btn-success" href="" data-ajax="true" data-ajax-confirm="Xác nhận xóa" data-ajax-url="@Url.Action("DeleteFollow","Car", new {item.Id})" data-ajax-success="$(this).parents('.col-md-3').remove()">Xóa</a>
+                            <a class="btn btn-primary" asp-controller="Car" asp-action="Index" asp-route-id="@item.Id">Chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CarRentalManagement.Models.ViewModel.FeatureManagement.ListFeatureViewModel>
+@{
+    ViewBag.Title = "Danh sách tính năng";
+    Layout = "_Layout";
+
+    string controller = Context.GetRouteValue("controller")!.ToString()!;
+    string area = AreaManager.Admin;
+}
+<div class="container-fluid mr-top-20">
+    <table id="datatable" class="table table-striped table-bordered">
+        <caption class="well well-sm text-danger">@TempData["Message"]</caption>
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="select-all"/>
+            </th>
+            <th>@Html.DisplayNameFor(x => x.Id)</th>
+            <th>@Html.DisplayNameFor(x => x.Name)</th>
+            <th>Xoá</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" value="@item.Id"/>
+                </td>
+                <td>
+                    <a asp-area="@area" asp-controller="@controller" asp-action="Edit" asp-route-id="@item.Id">@item.Id</a>
+                </td>
+                <td>@Html.DisplayFor(x => item.Name)</td>
+                <td>
+                    <a class="confirmDelete" asp-area="@area" asp-controller="@controller" asp-action="Delete" asp-route-id="@item.Id">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr id="table-footer" class="d-none">
+            <td colspan="3" style="border-top: 1px solid #dee2e6;border-right: none">
+                <div style="float: left" class="text-primary">
+                    <span id="selected-items"></span>
+                    <span>dòng đã chọn</span>
+                </div>
+            </td>
+            <td>
+                <i class="fa fa-trash-o" aria-hidden="true" id="remove-all" data-url="@Url.Action("Delete", controller, new { area = area })"></i>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/dt.js" asp-append-version="true"></script>
+}

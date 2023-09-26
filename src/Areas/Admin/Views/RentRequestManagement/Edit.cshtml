@@ -1,0 +1,332 @@
+﻿@using CarRentalManagement.Extensions
+@using CarRentalManagement.Areas.Admin.Controllers
+@model CarRentalManagement.Models.ViewModel.RentRequestManagement.EditRentRequestViewModel
+
+@{
+    ViewBag.Title = "Chỉnh sửa yêu cầu thuê xe";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid mr-top-20">
+<div class="row">
+<div class="col-md-7">
+    <div class="panel panel-info">
+        <div class="panel-heading">Thông tin xe</div>
+        <div class="panel-body row baguetteBox gallery">
+            @foreach (var image in Model.CarDetail.CarGalleries)
+            {
+                <div class="col-md-3" style="padding: 1px">
+                    <a href="@Url.Content("~")@image.Url">
+                        <img src="@image.ThumbUrl" width="100%"/>
+                    </a>
+                </div>
+            }
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th scope="row">Tên xe</th>
+                    <td>@Model.CarDetail.Name</td>
+                </tr>
+                <tr>
+                    <th scope="row">Biển số</th>
+                    <td>@Model.CarDetail.LicensePlate</td>
+                </tr>
+                <tr>
+                    <th scope="row">Màu sắc</th>
+                    <td>@Model.CarDetail.Color</td>
+                </tr>
+                <tr>
+                    <th scope="row">Hộp số</th>
+                    <td>@Model.CarDetail.TransmissionEnum.GetDescription()</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nhiên liệu</th>
+                    <td>@Model.CarDetail.FuelEnum.GetDescription()</td>
+                </tr>
+                <tr>
+                    <th scope="row">Số chỗ</th>
+                    <td>@Model.CarDetail.Seat</td>
+                </tr>
+                <tr>
+                    <th scope="row">Năm sản xuất</th>
+                    <td>@Model.CarDetail.ManufactureYear</td>
+                </tr>
+                <tr>
+                    <th scope="row">Hãng xe</th>
+                    <td>@Model.CarDetail.BrandName</td>
+                </tr>
+                <tr>
+                    <th scope="row">Loại xe</th>
+                    <td>@Model.CarDetail.CarTypeName</td>
+                </tr>
+                <tr>
+                    <th scope="row">Kích thước tổng thể</th>
+                    <td>@Model.CarDetail.OverallSize</td>
+                </tr>
+                <tr>
+                    <th scope="row">Chiều dài cơ sở</th>
+                    <td>@Model.CarDetail.LongStandard</td>
+                </tr>
+                <tr>
+                    <th scope="row">Động cơ</th>
+                    <td>@Model.CarDetail.Engine</td>
+                </tr>
+                <tr>
+                    <th scope="row">Dung tích bình xăng</th>
+                    <td>@Model.CarDetail.CapacityTank</td>
+                </tr>
+                <tr>
+                    <th scope="row">Tiêu thụ nhiên liệu</th>
+                    <td>@Model.CarDetail.FuelConsumption</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="panel panel-info">
+                <div class="panel-heading">Bảng giá và phụ phí</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Loại dịch vụ</th>
+                            <th scope="col">Đơn giá</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var estimate in Model.CarDetail.EstimatesList)
+                        {
+                            <tr>
+                                <th scope="row">@estimate.RentalMethod.GetDescription()</th>
+                                <td class="price">@estimate.UnitPrice</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                    <hr>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Loại phụ phí</th>
+                            <th scope="col">Đơn giá</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var surcharge in Model.CarDetail.SurChargeList)
+                        {
+                            <tr>
+                                <th scope="row">@surcharge.Name</th>
+                                <td class="price">@surcharge.Price</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">Thông tin sổ xe</div>
+        <div class="panel-body">
+            <div class="panel-body">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="well well-sm text-danger">@TempData["Message"]</div>
+                    <input asp-for="Id"/>
+                    <input asp-for="ReturnUrl"/>
+                    <input asp-for="RentalMethod"/>
+
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="CustomerId" class="control-label"></label>
+                        <input readonly asp-for="CustomerId" class="form-control">
+                    </fieldset>
+                    
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="CarId" class="control-label"></label>
+                        <input readonly asp-for="CarId" class="form-control">
+                    </fieldset>
+                    
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="RentalDate" class="control-label"></label>
+                        <input readonly asp-for="RentalDate" class="form-control">
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="ReturnedDate" class="control-label"></label>
+                        <input readonly asp-for="ReturnedDate" class="form-control">
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="RentalMethod" class="control-label"></label>
+                        <input readonly value="@Model.RentalMethod.GetDescription()" class="form-control">
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="TotalPrice" class="control-label"></label>
+                        <input readonly asp-for="TotalPrice" class="form-control price">
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="RentRequestStatusEnum" class="control-label"></label>
+                        <select asp-for="RentRequestStatusEnum" asp-items="RentRequestStatusEnum.Pending.ToSelectList()" class="form-control chosen"></select>
+                        <span asp-validation-for="RentRequestStatusEnum" class="text-danger"></span>
+                    </fieldset>
+                    <fieldset class="form-floating mb-3">
+                        <label asp-for="Note" class="control-label"></label>
+                        <textarea asp-for="Note" class="form-control editor"></textarea>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </fieldset>
+                    <div style="float: right">
+                        <a class="btn btn-default" id="cancel">Huỷ</a>
+                        <button class="btn btn-primary" type="submit">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-5">
+    <div class="panel panel-info">
+        <div class="panel-heading">Thông tin khách thuê</div>
+        <div class="panel-body">
+            <div class="baguetteBox gallery">
+                <a href="@Url.Content("~")@Model.CustomerDetail.Avatar">
+                    <img src="@Model.CustomerDetail.AvatarThumb" width="100%"/>
+                </a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th scope="row">Họ</th>
+                    <td>@Model.CustomerDetail.FirstName</td>
+                </tr>
+                <tr>
+                    <th scope="row">Tên</th>
+                    <td>@Model.CustomerDetail.LastName</td>
+                </tr>
+                <tr>
+                    <th scope="row">Tên</th>
+                    <td>@Model.CustomerDetail.BirthDate.ToString(Constant.DateFormat)</td>
+                </tr>
+                <tr>
+                    <th scope="row">Giới tính</th>
+                    <td>@Model.CustomerDetail.SexEnum.GetDescription()</td>
+                </tr>
+                <tr>
+                    <th scope="row">Số điện thoại</th>
+                    <td>@Model.CustomerDetail.Phone</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>@Model.CustomerDetail.Email</td>
+                </tr>
+                <tr>
+                    <th scope="row">Địa chỉ thường trú</th>
+                    <td>@Model.CustomerDetail.Domicile</td>
+                </tr>
+                <tr>
+                    <th scope="row">Địa chỉ tạm trú</th>
+                    <td>@Model.CustomerDetail.TempAccommodation</td>
+                </tr>
+                <tr>
+                    <th scope="row">Địa chỉ đang sống</th>
+                    <td>@Model.CustomerDetail.CurrentAddress</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nghề nghiệp</th>
+                    <td>@Model.CustomerDetail.Profession</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nơi làm việc</th>
+                    <td>@Model.CustomerDetail.WorkPlace</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="panel panel-info">
+                <div class="panel-heading">Giấy tờ xác minh</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Số CCCDM</th>
+                            <td>@Model.CustomerDetail.IDCard</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Ngày cấp</th>
+                            <td>@Model.CustomerDetail.DateOfIssue.ToString(Constant.DateFormat)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Ngày hết hạn</th>
+                            <td>@Model.CustomerDetail.ExpirationDate.ToString(Constant.DateFormat)</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Nơi cấp</th>
+                            <td>@Model.CustomerDetail.PlaceOfIssue</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row baguetteBox gallery">
+                        <div class="col-md-6">
+                            <p>Ảnh mặt trước</p>
+                            <a href="@Url.Content("~")@Model.CustomerDetail.FrontalPhoto">
+                                <img src="@Model.CustomerDetail.FrontalPhotoThumb" width="100%"/>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Ảnh mặt sau</p>
+                            <a href="@Url.Content("~")@Model.CustomerDetail.RearPhoto">
+                                <img src="@Model.CustomerDetail.RearPhotoThumb" width="100%"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Bằng lái xe</div>
+                @foreach (var item in Model.CustomerDetail.Licenses)
+                {
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <th scope="row">Mã số</th>
+                                <td>@item.Number</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Hạng</th>
+                                <td>@item.Grade</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Ngày cấp</th>
+                                <td>@item.DateOfIssue.ToString(Constant.DateFormat)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Ngày hết hạn</th>
+                                <td>@item.ExpirationDate.ToString(Constant.DateFormat)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Nơi cấp</th>
+                                <td>@item.PlaceOfIssue</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row baguetteBox gallery">
+                            <div class="col-md-6">
+                                <p>Ảnh mặt trước</p>
+                                <a href="@Url.Content("~")@item.FrontalPhoto">
+                                    <img src="@item.FrontalPhotoThumb" width="100%"/>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Ảnh mặt sau</p>
+                                <a href="@Url.Content("~")@item.RearPhoto">
+                                    <img src="@item.RearPhotoThumb" width="100%"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
