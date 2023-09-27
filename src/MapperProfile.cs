@@ -10,6 +10,10 @@ public class MapperProfile : Profile
 {
     public MapperProfile()
     {
+        CreateMap<RentRequest, SelectListItem>()
+            .ForMember(x => x.Text, opt => opt.MapFrom(x => $"{x.Id}"))
+            .ForMember(x => x.Value, opt => opt.MapFrom(x => x.Id.ToString()));
+        
         CreateMap<Brand, SelectListItem>()
             .ForMember(x => x.Text, opt => opt.MapFrom(x => $"{x.Id} - {x.Name}"))
             .ForMember(x => x.Value, opt => opt.MapFrom(x => x.Id.ToString()));

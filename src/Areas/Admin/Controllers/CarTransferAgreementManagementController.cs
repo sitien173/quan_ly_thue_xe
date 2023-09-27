@@ -30,7 +30,11 @@ public class CarTransferAgreementManagementController : AreaControllerBase
         return View(new AddCarTransferAgreementViewModel()
         {
             ReturnUrl = Request.Headers["Referer"].ToString(),
-            CreatedBy = UserId
+            CreatedBy = UserId,
+            CreatedAt = DateTime.Now,
+            EquipmentAttend = Constant.CarTransferAgreementEquipmentAttendTemplate,
+            TestListDetail = Constant.CarTransferAgreementTestListDetailTemplate,
+            VehicleProfileSetAttend = Constant.CarTransferAgreementVehicleProfileSetAttendTemplate
         });
     }
     
@@ -38,6 +42,8 @@ public class CarTransferAgreementManagementController : AreaControllerBase
     [HandlerException]
     public async Task<IActionResult> Add([FromForm] AddCarTransferAgreementViewModel model)
     {
+        model.CreatedBy = UserId;
+        model.CreatedAt = DateTime.Now;
         var id = await _carTransferAgreementService.AddAsync(model).ConfigureAwait(false);
         return RedirectToAction("Preview", new { id });
     }

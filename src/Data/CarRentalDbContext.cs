@@ -9,7 +9,6 @@ public class CarRentalDbContext : DbContext
     private const int _sizeDecimalScale = 0;
 
     public DbSet<Estimate> Estimate { get; set; }
-    public DbSet<InvoiceDetail> InvoiceDetail { get; set; }
     public DbSet<ContractDetail> ContractDetail { get; set; }
     public DbSet<License> License { get; set; }
     public DbSet<CarPhotoGallery> CarPhotoGallery { get; set; }
@@ -25,7 +24,7 @@ public class CarRentalDbContext : DbContext
     public DbSet<RentRequest> RentRequest { get; set; }
     public DbSet<SurCharge> SurCharge { get; set; }
     public DbSet<Contact> Contact { get; set; }
-    public DbSet<Accident> Accidents { get; set; }
+    public DbSet<Damages> Damages { get; set; }
     
     public CarRentalDbContext(DbContextOptions<CarRentalDbContext> options)
         : base(options)
@@ -50,18 +49,6 @@ public class CarRentalDbContext : DbContext
             .WithMany(x => x.Estimates)
             .HasForeignKey(x => x.CarTypeId);
         
-        var invoiceDetail = modelBuilder.Entity<InvoiceDetail>();
-        invoiceDetail.HasKey(x => x.Id);
-        invoiceDetail.Property(x => x.Id)
-            .UseIdentityColumn();
-        invoiceDetail.Property(x => x.UnitPrice).HasPrecision(_sizeDecimal, _sizeDecimalScale);
-        invoiceDetail.Property(x => x.Price).HasPrecision(_sizeDecimal, _sizeDecimalScale);
-        invoiceDetail.Property(x => x.RentalMethod)
-            .HasConversion(
-                v => v.ToString(),
-                v => (RentalMethodEnum)Enum.Parse(typeof(RentalMethodEnum), v))
-            .IsUnicode(false);
-
         var contractDetail = modelBuilder.Entity<ContractDetail>();
         contractDetail.HasKey(x => x.Id);
         
@@ -102,16 +89,8 @@ public class CarRentalDbContext : DbContext
         invoice.Property(x => x.Id)
             .UseIdentityColumn();
 
-        invoice.Property(x => x.PayMethodEnum)
-            .HasConversion(
-                v => v.ToString(),
-                v => (PayMethodEnum)Enum.Parse(typeof(PayMethodEnum), v))
-            .IsUnicode(false);
-
-        invoice.Property(x => x.Prepay).HasPrecision(_sizeDecimal, _sizeDecimalScale);
-        invoice.Property(x => x.Debt).HasPrecision(_sizeDecimal, _sizeDecimalScale);
-        invoice.Property(x => x.Total).HasPrecision(_sizeDecimal, _sizeDecimalScale);
-        invoice.Property(x => x.PayOff).HasPrecision(_sizeDecimal, _sizeDecimalScale);
+        invoice.Property(x => x.UnitPrice).HasPrecision(_sizeDecimal, _sizeDecimalScale);
+        invoice.Property(x => x.TotalPriceWithVat).HasPrecision(_sizeDecimal, _sizeDecimalScale);
         
         var contract = modelBuilder.Entity<Contract>();
         contract.HasKey(x => x.Id);
@@ -122,12 +101,16 @@ public class CarRentalDbContext : DbContext
             .WithOne(x => x.Contract)
             .HasForeignKey(x => x.ContractId);
 
+        contract.HasOne(x => x.RentRequest)
+            .WithOne(x => x.Contract)
+            .HasForeignKey<Contract>(x => x.RentRequestId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         contract.Property(x => x.CreatedAt)
             .HasDefaultValueSql("getdate()");
 
         contract.Property(x => x.Total).HasPrecision(_sizeDecimal, _sizeDecimalScale);
         contract.Property(x => x.Prepay).HasPrecision(_sizeDecimal, _sizeDecimalScale);
-        contract.Property(x => x.Debt).HasPrecision(_sizeDecimal, _sizeDecimalScale);
 
         var customer = modelBuilder.Entity<Customer>();
         customer.HasKey(x => x.Id);
@@ -160,11 +143,6 @@ public class CarRentalDbContext : DbContext
             .WithOne(x => x.Customer)
             .HasForeignKey(x => x.CustomerId);
         
-        customer.HasMany(x => x.Contracts)
-            .WithOne(x => x.Customer)
-            .HasForeignKey(x => x.CustomerId);
-
-
         var carType = modelBuilder.Entity<CarType>();
         carType.HasKey(x => x.Id);
         carType.Property(x => x.Id)
@@ -301,6 +279,10 @@ public class CarRentalDbContext : DbContext
             .IsUnicode(false);
             
         rentRequest.Property(x => x.TotalPrice).HasPrecision(_sizeDecimal, _sizeDecimalScale);
+
+        rentRequest.HasOne(x => x.Contract)
+            .WithOne(x => x.RentRequest)
+            .HasForeignKey<Contract>(x => x.RentRequestId);
         
         var surcharge = modelBuilder.Entity<SurCharge>();
         surcharge.HasKey(x => x.Id);
@@ -339,19 +321,6 @@ public class CarRentalDbContext : DbContext
         contact.Property(x => x.Id)
             .UseIdentityColumn();
         
-        var accident = modelBuilder.Entity<Accident>();
-        accident.HasKey(x => x.Id);
-        accident.Property(x => x.Id)
-            .UseIdentityColumn();
-
-        accident.HasOne(x => x.Car)
-            .WithMany(x => x.Accidents)
-            .HasForeignKey(x => x.CarId);
-
-        accident.HasOne(x => x.Contract)
-            .WithOne(x => x.Accidents)
-            .HasForeignKey<Accident>(x => x.ContractId);
-        
         var damage = modelBuilder.Entity<Damages>();
         damage.HasKey(x => x.Id);
         damage.Property(x => x.Id)
@@ -365,7 +334,7 @@ public class CarRentalDbContext : DbContext
             .WithOne(x => x.Damages)
             .HasForeignKey<Damages>(x => x.ContractId);
         
-        damage.Property(x => x.RepairCost).HasPrecision(_sizeDecimal, _sizeDecimalScale);
+        damage.Property(x => x.TotalRepairCost).HasPrecision(_sizeDecimal, _sizeDecimalScale);
         
         base.OnModelCreating(modelBuilder);
     }

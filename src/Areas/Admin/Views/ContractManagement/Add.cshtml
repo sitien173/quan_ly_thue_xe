@@ -1,8 +1,12 @@
-﻿@model CarRentalManagement.Models.ViewModel.ContractManagement.AddContractViewModel
+﻿@using CarRentalManagement.Services
+@model CarRentalManagement.Models.ViewModel.ContractManagement.AddContractViewModel
+@inject IRentRequestService RentRequestService
 
 @{
     ViewBag.Title = "Thêm hợp đồng";
     Layout = "_Layout";
+
+    var rentRequestSelectList = await RentRequestService.ListAsync<SelectListItem>().ConfigureAwait(false);
 }
 <div class="container-fluid mr-top-20">
     <div class="panel panel-primary">
@@ -15,29 +19,11 @@
                 <input asp-for="CreatedBy"/>
                 
                 <fieldset class="form-floating mb-3">
-                    <label asp-for="CustomerId" class="control-label"></label>
-                    <select asp-for="CustomerId" asp-items="Model.CustomerSelectListItems" class="form-control chosen"></select>
-                    <span asp-validation-for="CustomerId" class="text-danger"></span>
+                    <label asp-for="RentRequestId" class="control-label"></label>
+                    <select asp-for="RentRequestId" asp-items="rentRequestSelectList" class="form-control chosen"></select>
+                    <span asp-validation-for="RentRequestId" class="text-danger"></span>
                 </fieldset>
                 
-                <fieldset class="form-floating mb-3">
-                    <label asp-for="Prepay" class="control-label"></label>
-                    <input asp-for="Prepay" class="form-control price" />
-                    <span asp-validation-for="Prepay" class="text-danger"></span>
-                </fieldset>
-                
-                <fieldset class="form-floating mb-3">
-                    <label asp-for="TotalCarRent" class="control-label"></label>
-                    <input asp-for="TotalCarRent" class="form-control" />
-                    <span asp-validation-for="TotalCarRent" class="text-danger"></span>
-                </fieldset>
-
-                <fieldset class="form-floating mb-3">
-                    <label asp-for="Note" class="control-label"></label>
-                    <textarea asp-for="Note" class="form-control"></textarea>
-                    <span asp-validation-for="Note" class="text-danger"></span>
-                </fieldset>
-
                 <div class="text-right">
                     <a class="btn btn-default" id="cancel">Huỷ</a>
                     <button class="btn btn-primary" type="submit">Thêm chi tiết hợp đồng</button>

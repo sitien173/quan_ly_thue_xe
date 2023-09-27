@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using CarRentalManagement.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -8,136 +7,45 @@ namespace CarRentalManagement.Models.ViewModel.InvoiceManagement;
 
 public class AddInvoiceViewModel
 {
-    public AddInvoiceViewModel()
-    {
-        InvoiceDetails = new List<InvoiceDetailViewModel>();
-    }
-    
-    [Display(Name = "Mã hợp đồng")]
     [HiddenInput]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Mã hợp đồng không được để trống")]
+    [Display(Name = "Mã hợp đồng")]
     public int ContractId { get; set; }
     
-    [Display(Name = "Hình thức thanh toán")]
-    public PayMethodEnum PayMethodEnum { get; set; }
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
+    [Display(Name = "Nội dung")]
+    public string Content { get; set; } = null!;
     
-    [Display(Name = "Tổng cộng")]
-    [DataType(DataType.Text)]
-    public decimal Total { get; set; }
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Sub total không được để trống")]
+    [Display(Name = "Cộng tiền hàng (Sub total)")]
+    public decimal UnitPrice { get; set; }
     
-    [Display(Name = "Còn lại")]
-    [DataType(DataType.Text)]
-    public decimal Debt { get; set; }
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Total payment không được để trống")]
+    [Display(Name = "Tổng cộng tiền thanh toán (Total payment)")]
+    public decimal TotalPriceWithVat { get; set; }
     
-    [Display(Name = "Đưa trước")]
-    [DataType(DataType.Text)]
-    public decimal Prepay { get; set; }
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Thuế không được để trống")]
+    [Display(Name = "Tiền thuế GTGT (VAT amount)")]
+    public int Vat { get; set; } = 10;
     
-    [Display(Name = "Thanh toán")]
-    [DataType(DataType.Text)]
-    public decimal PayOff { get; set; }
-    
-    [Display(Name = "Nội dung thanh toán")]
-    public string? Content { get; set; }
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Số tiền bằng chữ không được để trống")]
+    [Display(Name = "Số tiền viết bằng chữ (Amount in words)")]
+    public string Money { get; set; } = null!;
     
     [HiddenInput]
     public int CreatedBy { get; set; }
     
-    public List<InvoiceDetailViewModel> InvoiceDetails { get; set; }
-    
-    public CustomerDetailViewModel CustomerDetail { get; set; }
+    [HiddenInput]
+    public DateTime CreatedAt { get; set; }
     
     [HiddenInput]
     public string? ReturnUrl { get; set; }
-    
-    public class InvoiceDetailViewModel
-    {
-        [Display(Name = "Mã xe")]
-        [HiddenInput]
-        public int CarId { get; set; }
-        
-        [Display(Name = "Đơn giá")]
-        [DataType(DataType.Text)]
-        [HiddenInput]
-        public decimal UnitPrice { get; set; }
-        
-        [Display(Name = "Thành tiền")]
-        [DataType(DataType.Text)]
-        [HiddenInput]
-        public decimal Price { get; set; }
-        
-        [Display(Name = "Ngày thuê")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [HiddenInput]
-        public DateTime RentalDate { get; set; }
-        
-        [Display(Name = "Ngày trả")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [HiddenInput]
-        public DateTime ReturnedDate { get; set; }
-        
-        [Display(Name = "Số lượng")]
-        [HiddenInput]
-        public int Amount { get; set; }
-        
-        [HiddenInput]
-        [Display(Name = "Hình thức thuê")]
-        public RentalMethodEnum RentalMethod { get; set; }
-    }
 
-    public class CustomerDetailViewModel
+    public class MapperProfile : Profile
     {
-        [Display(Name = "Tên khách hàng")]
-        public string FullName { get; set; }
-        
-        [Display(Name = "Giới tính")]
-        public SexEnum SexEnum { get; set; }
-        
-        [Display(Name = "Số điện thoại")]
-        public string Phone { get; set; }
-        
-        [Display(Name = "Ngày sinh")]
-        [DataType(DataType.Date)]
-        public DateTime BirthDate { get; set; }
-        
-        [Display(Name = "Căn cước công dân")]
-        public string IDCard { get; set; }
-        
-        [Display(Name = "Ngày cấp")]
-        [DataType(DataType.Date)]
-        public DateTime DateOfIssue { get; set; }
-        
-        [Display(Name = "Nơi cấp")]
-        public string PlaceOfIssue { get; set; }
-        
-        [Display(Name = "Địa chỉ thường trú")]
-        public string Domicile { get; set; }
-        
-        [Display(Name = "Địa chỉ hiện tại")]
-        public string CurrentAddress { get; set; }
-    }
-
-    public class Mapper : Profile
-    {
-        public Mapper()
+        public MapperProfile()
         {
-            CreateMap<Entities.Customer, CustomerDetailViewModel>()
-                .ForMember(x => x.FullName, opt => 
-                    opt.MapFrom(x => $"{x.FirstName} {x.LastName}"));
-            
-            CreateMap<AddInvoiceViewModel, Invoice>()
-                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now))
-                .ForMember(x => x.InvoiceDetails, opt => opt.MapFrom(x => x.InvoiceDetails))
-                .AfterMap((src, dest) =>
-                {
-                    dest.TotalCarRental = src.InvoiceDetails.Count;
-                    dest.Total = src.InvoiceDetails.Sum(x => x.Price);
-                    dest.Debt = Math.Max(0, src.Total - src.Prepay - src.PayOff);
-                });
-
-            CreateMap<ContractDetail, InvoiceDetailViewModel>();
-            CreateMap<InvoiceDetailViewModel, InvoiceDetail>();
+            CreateMap<AddInvoiceViewModel, Invoice>();
         }
     }
 }

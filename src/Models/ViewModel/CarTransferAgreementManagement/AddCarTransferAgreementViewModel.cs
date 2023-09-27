@@ -13,9 +13,6 @@ public class AddCarTransferAgreementViewModel
     [Display(Name = "Mã hợp đồng")]
     public int ContractId { get; set; }
     
-    [Display(Name = "Mã xe")]
-    public int CarId { get; set; }
-    
     [Display(Name = "Danh mục kiểm tra")]
     public string? TestListDetail { get; set; }
     

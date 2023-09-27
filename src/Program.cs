@@ -38,6 +38,17 @@ builder.Services.AddAuthentication(cookieSettings.AuthenticationScheme)
         options.ExpireTimeSpan = TimeSpan.FromDays(cookieSettings.ExpireDay);
     });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000);
+    options.ListenAnyIP(7218, listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(5);
+    options.Limits.MaxConcurrentConnections = 100;
+});
+
 var app = builder.Build();
 
 EntityFrameworkProfiler.Initialize();
@@ -53,6 +64,10 @@ if (!app.Environment.IsDevelopment())
 
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+
+    using var serviceScope = app.Services.CreateScope();
+    var context = serviceScope.ServiceProvider.GetRequiredService<CarRentalDbContext>();
+    await context.Database.MigrateAsync();
 }
 
 app.UseHttpsRedirection();

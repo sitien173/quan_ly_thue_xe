@@ -12,6 +12,8 @@ public class RentRequest
     public RentRequestStatusEnum RentRequestStatusEnum { get; set; }
     public RentalMethodEnum RentalMethod { get; set; }
     public decimal TotalPrice { get; set; }
+    public int? ContractId { get; set; }
+    public Contract? Contract { get; set; }
     public string? Note { get; set; }
     public bool IsDeleted { get; set; }
 }

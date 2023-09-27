@@ -14,30 +14,17 @@ public class ListContractViewModel
     [DataType(DataType.Text)]
     public decimal Total { get; set; }
     
-    [Display(Name = "Đưa trước")]
+    [Display(Name = "Cọc")]
     [DataType(DataType.Text)]
     public decimal Prepay { get; set; }
-    
-    [Display(Name = "Đã thanh toán")]
-    [DataType(DataType.Text)]
-    public decimal PayOff { get; set; }
-    
-    private decimal debt => Total - PayOff;
-    
-    [Display(Name = "Còn lại")]
-    [DataType(DataType.Text)]
-    public decimal Debt => debt < 0 ? 0 : debt;
-
-    [Display(Name = "Số lượng xe thuê")]
-    public int TotalCarRent { get; set; }
     
     [Display(Name = "Ngày tạo")]
     [DataType(DataType.Date)] 
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
     public DateTime CreatedAt{ get; set; }
     
-    [Display(Name = "Khách hàng")]
-    public int CustomerId{ get; set; }
+    [Display(Name = "Mã đặt xe")]
+    public int RentRequestId { get; set; }
     
     [Display(Name = "Ghi chú")]
     public string? Note{ get; set; }
@@ -51,9 +38,7 @@ public class ListContractViewModel
     {
         public Mapper()
         {
-            CreateMap<Contract, ListContractViewModel>()
-                .ForMember(x => x.PayOff, opt =>
-                    opt.MapFrom(x => x.Prepay + x.Invoices.Sum(i => i.PayOff)));
+            CreateMap<Contract, ListContractViewModel>();
         }
     }
 }

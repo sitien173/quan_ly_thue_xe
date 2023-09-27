@@ -1,10 +1,10 @@
 ﻿using CarRentalManagement.Interceptors.Filter;
 using CarRentalManagement.Models.Entities;
 using CarRentalManagement.Models.ViewModel.ContractManagement;
+using CarRentalManagement.Models.ViewModel.RentRequestManagement;
 using CarRentalManagement.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
@@ -12,13 +12,12 @@ namespace CarRentalManagement.Areas.Admin.Controllers;
 public class ContractManagementController : AreaControllerBase
 {
     private readonly IContractService _contractService;
-    private readonly ICustomerService _customerService;
-    private readonly ICarService _carService;
-    public ContractManagementController(IContractService contractService, ICarService carService, ICustomerService customerService)
+    private readonly IRentRequestService _rentRequestService;
+
+    public ContractManagementController(IContractService contractService, IRentRequestService rentRequestService)
     {
         _contractService = contractService;
-        _carService = carService;
-        _customerService = customerService;
+        _rentRequestService = rentRequestService;
     }
 
     public async Task<IActionResult> Index()
@@ -32,7 +31,6 @@ public class ContractManagementController : AreaControllerBase
         var model = new AddContractViewModel()
         {
             ReturnUrl = Request.Headers["Referer"].ToString(),
-            CustomerSelectListItems = await _customerService.ListAsync<SelectListItem>().ConfigureAwait(false),
             CreatedBy = UserId
         };
         return View(model);
@@ -41,12 +39,21 @@ public class ContractManagementController : AreaControllerBase
     [HttpPost]
     public async Task<IActionResult> AddContractDetail([FromForm] AddContractViewModel model)
     {
-        model.ContractDetails = new List<AddContractViewModel.ContractDetailViewModel>(model.TotalCarRent);
-        for (var i = 0; i < model.TotalCarRent; i++)
-            model.ContractDetails.Add(new AddContractViewModel.ContractDetailViewModel());
-        
-        model.CarSelectListItems = await _carService.ListAsync<SelectListItem>().ConfigureAwait(false);
-        model.CustomerSelectListItems = await _customerService.ListAsync<SelectListItem>().ConfigureAwait(false);
+        var rentRequest = await _rentRequestService.GetAsync<ListRentRequestViewModel>(model.RentRequestId).ConfigureAwait(false);
+        model.ContractDetails = new List<AddContractViewModel.ContractDetailViewModel>()
+        {
+            new ()
+            {
+                CarId = rentRequest.CarId,
+                Amount = 1,
+                Price = rentRequest.TotalPrice,
+                UnitPrice = rentRequest.TotalPrice,
+                RentalDate = rentRequest.RentalDate,
+                ReturnedDate = rentRequest.ReturnedDate,
+                RentalMethod = rentRequest.RentalMethod
+            }
+        };
+        model.Prepay = decimal.Divide(rentRequest.TotalPrice, 2);
         return View(model);
     }
     

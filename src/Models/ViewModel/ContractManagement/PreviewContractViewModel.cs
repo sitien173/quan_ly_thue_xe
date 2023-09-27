@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CarRentalManagement.Models.Entities;
+using CarRentalManagement.Models.ViewModel.RentRequestManagement;
 
 namespace CarRentalManagement.Models.ViewModel.ContractManagement;
 
@@ -82,7 +83,7 @@ public class PreviewContractViewModel
             
             CreateMap<Contract, PreviewContractViewModel>()
                 .ForMember(x => x.CustomerDetail, opt => 
-                    opt.MapFrom(x => x.Customer))
+                    opt.MapFrom(x => x.RentRequest.Customer))
                 .ForMember(x => x.ContractDetails, opt => 
                     opt.MapFrom(x => x.ContractDetails));
 

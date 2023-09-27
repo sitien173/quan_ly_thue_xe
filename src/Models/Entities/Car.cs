@@ -5,13 +5,11 @@ public class Car
     public Car()
     {
         ContractDetails = new List<ContractDetail>();
-        ReciptDetails = new List<InvoiceDetail>();
         CarPhotoGalleries = new List<CarPhotoGallery>();
         CarFeatures = new List<CarFeature>();
         Follows = new List<Follow>();
         RentRequests = new List<RentRequest>();
         CarTransferAgreements = new List<CarTransferAgreement>();
-        Accidents = new List<Accident>();
     }
     public int Id { get; set; }
     public string Name { get; set; }
@@ -36,12 +34,10 @@ public class Car
     public Brand Brand { get; set; }
     public CarType CarType { get; set; }
     public ICollection<ContractDetail> ContractDetails { get; set; }
-    public ICollection<InvoiceDetail> ReciptDetails { get; set; }
     public ICollection<CarPhotoGallery> CarPhotoGalleries { get; set; }
     public ICollection<CarFeature> CarFeatures { get; set; }
     public ICollection<Follow> Follows { get; set; }
     public ICollection<RentRequest> RentRequests { get; set; }
     public ICollection<CarTransferAgreement> CarTransferAgreements { get; set; }
-    public ICollection<Accident> Accidents { get; set; }
     public ICollection<Damages> Damages { get; set; }
 }

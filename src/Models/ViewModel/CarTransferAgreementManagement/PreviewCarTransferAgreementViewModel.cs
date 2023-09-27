@@ -86,7 +86,7 @@ public class PreviewCarTransferAgreementViewModel
             CreateMap<Entities.Car, CarDetailViewModel>();
 
             CreateMap<CarTransferAgreement, PreviewCarTransferAgreementViewModel>()
-                .ForMember(x => x.CustomerDetail, opt => opt.MapFrom(x => x.Contract.Customer))
+                .ForMember(x => x.CustomerDetail, opt => opt.MapFrom(x => x.Contract.RentRequest.Customer))
                 .ForMember(x => x.CarDetail, opt => opt.MapFrom(x => x.Car));
         }
     }

@@ -3,13 +3,11 @@
 @using CarRentalManagement.Extensions
 @model CarRentalManagement.Models.ViewModel.CarTransferAgreementManagement.AddCarTransferAgreementViewModel
 @inject IContractService ContractService
-@inject ICarService CarService
 @{
     ViewBag.Title = "Thêm biên bản bàn giao xe";
     Layout = "_Layout";
 
     var contractItems = await ContractService.ListAsync<SelectListItem>().ConfigureAwait(false);
-    var carItems = await CarService.ListAsync<SelectListItem>().ConfigureAwait(false);
 }
 <div class="container-fluid mr-top-20">
     <div class="panel panel-primary">
@@ -26,11 +24,6 @@
                     <select asp-for="ContractId" asp-items="contractItems" class="form-control chosen"></select>
                     <span asp-validation-for="ContractId" class="text-danger"></span>
                 </fieldset>
-                <fieldset class="form-floating mb-3">
-                    <label asp-for="CarId" class="control-label"></label>
-                    <select asp-for="CarId" asp-items="carItems" class="form-control chosen"></select>
-                    <span asp-validation-for="CarId" class="text-danger"></span>
-                </fieldset>
                 
                 <fieldset class="form-floating mb-3">
                     <label asp-for="CheckInOutEnum" class="control-label"></label>
@@ -43,16 +36,19 @@
                     <textarea asp-for="TestListDetail" class="form-control"></textarea>
                     <span asp-validation-for="TestListDetail" class="text-danger"></span>
                 </fieldset>
+                
                 <fieldset class="form-floating mb-3">
                     <label asp-for="EquipmentAttend" class="control-label"></label>
                     <textarea asp-for="EquipmentAttend" class="form-control"></textarea>
                     <span asp-validation-for="EquipmentAttend" class="text-danger"></span>
                 </fieldset>
+                
                 <fieldset class="form-floating mb-3">
                     <label asp-for="VehicleProfileSetAttend" class="control-label"></label>
                     <textarea asp-for="VehicleProfileSetAttend" class="form-control"></textarea>
                     <span asp-validation-for="VehicleProfileSetAttend" class="text-danger"></span>
                 </fieldset>
+                
                 <div style="float: right">
                     <a class="btn btn-default" id="cancel">Huỷ</a>
                     <button class="btn btn-primary" type="submit">In</button>

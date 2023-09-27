@@ -17,9 +17,8 @@
             <th>@Html.DisplayNameFor(x => x.Id)</th>
             <th>@Html.DisplayNameFor(x => x.CarId)</th>
             <th>@Html.DisplayNameFor(x => x.ContractId)</th>
-            <th>@Html.DisplayNameFor(x => x.RepairCost)</th>
+            <th>@Html.DisplayNameFor(x => x.TotalRepairCost)</th>
             <th>@Html.DisplayNameFor(x => x.DamagedAt)</th>
-            <th>@Html.DisplayNameFor(x => x.Description)</th>
             <th>@Html.DisplayNameFor(x => x.CreatedAt)</th>
             <th>@Html.DisplayNameFor(x => x.CreatedBy)</th>
             <th>Xoá</th>
@@ -33,7 +32,7 @@
                     <input type="checkbox" class="checkbox" value="@item.Id"/>
                 </td>
                 <td>
-                    <a asp-area="@area" asp-controller="@controller" asp-action="Edit" asp-route-id="@item.Id">@item.Id</a>
+                    <a asp-area="@area" asp-controller="@controller" asp-action="Preview" asp-route-id="@item.Id">@item.Id</a>
                 </td>
                 <td>
                     <a asp-area="@area" asp-controller="CarManagement" asp-action="Edit" asp-route-id="@item.CarId">
@@ -45,9 +44,8 @@
                         @item.ContractId
                     </a>
                 </td>
-                <td class="price">@Html.DisplayFor(x => item.RepairCost)</td>
+                <td class="price">@Html.DisplayFor(x => item.TotalRepairCost)</td>
                 <td>@Html.DisplayFor(x => item.DamagedAt)</td>
-                <td>@Html.Raw(item.Description)</td>
                 <td>@Html.DisplayFor(x => item.CreatedAt)</td>
                 <td>
                     <a asp-area="@area" asp-controller="EmployeeManagement" asp-action="Edit" asp-route-id="@item.CreatedBy">

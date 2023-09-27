@@ -1,5 +1,4 @@
-﻿@using CarRentalManagement.Extensions
-@model IEnumerable<CarRentalManagement.Models.ViewModel.InvoiceManagement.ListInvoiceViewModel>
+﻿@model IEnumerable<CarRentalManagement.Models.ViewModel.InvoiceManagement.ListInvoiceViewModel>
 
 @{
     ViewBag.Title = "title";
@@ -19,13 +18,12 @@
             </th>
             <th>@Html.DisplayNameFor(x => x.Id)</th>
             <th>@Html.DisplayNameFor(x => x.ContractId)</th>
-            <th>@Html.DisplayNameFor(x => x.PayMethodEnum)</th>
-            <th>@Html.DisplayNameFor(x => x.Total)</th>
-            <th>@Html.DisplayNameFor(x => x.Prepay)</th>
-            <th>@Html.DisplayNameFor(x => x.PayOff)</th>
-            <th>@Html.DisplayNameFor(x => x.Debt)</th>
-            <th>@Html.DisplayNameFor(x => x.TotalCarRental)</th>
             <th>@Html.DisplayNameFor(x => x.CreatedAt)</th>
+            <th>@Html.DisplayNameFor(x => x.UnitPrice)</th>
+            <th>@Html.DisplayNameFor(x => x.Vat)</th>
+            <th>@Html.DisplayNameFor(x => x.TotalPriceWithVat)</th>
+            <th>@Html.DisplayNameFor(x => x.Money)</th>
+            <th>@Html.DisplayNameFor(x => x.CreatedBy)</th>
             <th>Xoá</th>
         </tr>
         </thead>
@@ -46,13 +44,16 @@
                         @item.ContractId
                     </a>
                 </td>
-                <td>@item.PayMethodEnum.GetDescription()</td>
-                <td class="price">@Html.DisplayFor(x => item.Total)</td>
-                <td class="price">@Html.DisplayFor(x => item.Prepay)</td>
-                <td class="price">@Html.DisplayFor(x => item.PayOff)</td>
-                <td class="price">@Html.DisplayFor(x => item.Debt)</td>
-                <td>@Html.DisplayFor(x => item.TotalCarRental)</td>
                 <td>@Html.DisplayFor(x => item.CreatedAt)</td>
+                <td class="price">@Html.DisplayFor(x => item.UnitPrice)</td>
+                <td>@Html.DisplayFor(x => item.Vat) %</td>
+                <td class="price">@Html.DisplayFor(x => item.TotalPriceWithVat)</td>
+                <td>@Html.DisplayFor(x => item.Money)</td>
+                <td>
+                    <a asp-area="@area" asp-controller="EmployeeManagement" asp-action="Edit" asp-route-id="@item.CreatedBy">
+                                            @item.CreatedBy
+                    </a>
+                </td>
                 <td>
                     <a class="confirmDelete" asp-area="@area" asp-controller="@controller" asp-action="Delete" asp-route-id="@item.Id">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>

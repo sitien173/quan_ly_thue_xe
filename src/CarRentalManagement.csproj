@@ -30,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Repositories\" />
       <Folder Include="wwwroot\images" />
       <Folder Include="wwwroot\uploads\thumbs" />
     </ItemGroup>
@@ -73,6 +74,9 @@
       <_ContentIncludedByDefault Remove="Areas\Admin\Views\PaymentVoucherManagement\PreviewPaymentVoucher.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\Admin\Views\CheckInOutCarManagement\Add.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\Admin\Views\CheckInOutCarManagement\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\AccidentManagement\Add.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\AccidentManagement\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\AccidentManagement\Index.cshtml" />
     </ItemGroup>
 
 </Project>

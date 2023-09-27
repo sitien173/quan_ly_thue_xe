@@ -18,11 +18,9 @@
             </th>
             <th>@Html.DisplayNameFor(x => x.Id)</th>
             <th>@Html.DisplayNameFor(x => x.CreatedAt)</th>
-            <th>@Html.DisplayNameFor(x => x.CustomerId)</th>
+            <th>@Html.DisplayNameFor(x => x.RentRequestId)</th>
             <th>@Html.DisplayNameFor(x => x.Total)</th>
             <th>@Html.DisplayNameFor(x => x.Prepay)</th>
-            <th>@Html.DisplayNameFor(x => x.PayOff)</th>
-            <th>@Html.DisplayNameFor(x => x.Debt)</th>
             <th>@Html.DisplayNameFor(x => x.Status)</th>
             <th>Thanh lý</th>
             <th>Xoá</th>
@@ -42,14 +40,12 @@
                 </td>
                 <td>@Html.DisplayFor(x => item.CreatedAt)</td>
                 <td>
-                    <a asp-area="Admin" asp-controller="CustomerManagement" asp-action="Edit" asp-route-id="@item.CustomerId">
-                        @item.CustomerId
+                    <a asp-area="Admin" asp-controller="RentRequestManagement" asp-action="Edit" asp-route-id="@item.RentRequestId">
+                        @item.RentRequestId
                     </a>
                 </td>
                 <td class="price">@Html.DisplayFor(x => item.Total)</td>
                 <td class="price">@Html.DisplayFor(x => item.Prepay)</td>
-                <td class="price">@Html.DisplayFor(x => item.PayOff)</td>
-                <td class="price">@Html.DisplayFor(x => item.Debt)</td>
                 <td>@item.Status</td>
                 @if (!item.IsTerminationMinutes)
                 {

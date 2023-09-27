@@ -12,33 +12,25 @@ public class ListInvoiceViewModel
     [Display(Name = "Mã hợp đồng")]
     public int ContractId { get; set; }
     
-    [Display(Name = "Phương thức thanh toán")]
-    public PayMethodEnum PayMethodEnum { get; set; }
-    
-    [Display(Name = "Đưa trước")]
-    [DataType(DataType.Text)]
-    public decimal Prepay { get; set; }
-    
-    [Display(Name = "Còn lại")]
-    [DataType(DataType.Text)]
-    public decimal Debt { get; set; }
-    
-    [Display(Name = "Khách thanh toán")]
-    [DataType(DataType.Text)]
-    public decimal PayOff { get; set; }
-    
-    [Display(Name = "Tông tiền")]
-    [DataType(DataType.Text)]
-    public decimal Total { get; set; }
-    
-    [Display(Name = "Tổng số xe thuê")]
-    public int TotalCarRental { get; set; }
-    
     [Display(Name = "Ngày tạo")]
     [DataType(DataType.Date)]
-	[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]  
-
+	[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
     public DateTime CreatedAt { get; set; }
+    
+    [Display(Name = "Sub total")]
+    public decimal UnitPrice { get; set; }
+    
+    [Display(Name = "Total payment")]
+    public decimal TotalPriceWithVat { get; set; }
+    
+    [Display(Name = "VAT amount")]
+    public int Vat { get; set; } = 10;
+    
+    [Display(Name = "Amount in words")]
+    public string Money { get; set; } = null!;
+    
+    [Display(Name = "Người tạo")]
+    public int CreatedBy { get; set; }
 
     public class Mapper : Profile
     {

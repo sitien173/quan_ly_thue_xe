@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using CarRentalManagement.Extensions
-@model CarRentalManagement.Models.ViewModel.InvoiceManagement.AddInvoiceViewModel
+﻿@model CarRentalManagement.Models.ViewModel.InvoiceManagement.AddInvoiceViewModel
 @{
     ViewBag.Title = "Thêm hoá đơn";
     Layout = "_Layout";
@@ -13,137 +11,37 @@
                 <input asp-for="ReturnUrl">
                 <input asp-for="CreatedBy">
                 <input asp-for="ContractId">
-                <div class="panel panel-info">
-                    <div class="panel-heading">Thông tin khách hàng</div>
-                    <div class="panel-body">
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.FullName" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.FullName" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.FullName" class="text-danger"></span>
-                        </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="UnitPrice" class="control-label"></label>
+                    <input asp-for="UnitPrice" class="form-control"/>
+                    <span asp-validation-for="UnitPrice" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Vat" class="control-label"></label>
+                    <input asp-for="Vat" class="form-control"/>
+                    <span asp-validation-for="Vat" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="TotalPriceWithVat" class="control-label"></label>
+                    <input asp-for="TotalPriceWithVat" class="form-control"/>
+                    <span asp-validation-for="TotalPriceWithVat" class="text-danger"></span>
+                </fieldset>
 
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.SexEnum" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.SexEnum" value="@Model.CustomerDetail.SexEnum.GetDescription()" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.SexEnum" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.Phone" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.Phone" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.Phone" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.BirthDate" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.BirthDate" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.BirthDate" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.IDCard" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.IDCard" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.IDCard" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.DateOfIssue" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.DateOfIssue" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.DateOfIssue" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.PlaceOfIssue" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.PlaceOfIssue" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.PlaceOfIssue" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.Domicile" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.Domicile" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.Domicile" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="CustomerDetail.CurrentAddress" class="control-label"></label>
-                            <input readonly asp-for="CustomerDetail.CurrentAddress" class="form-control"/>
-                            <span asp-validation-for="CustomerDetail.CurrentAddress" class="text-danger"></span>
-                        </fieldset>
-                    </div>
-                </div>
-                <div class="panel panel-info">
-                    <div class="panel-heading">Chi tết hoá đơn</div>
-                    @for (int i = 0; i < Model.InvoiceDetails.Count; i++)
-                    {
-                        <input asp-for="InvoiceDetails[i].CarId">
-                        <input asp-for="InvoiceDetails[i].Amount">
-                        <input asp-for="InvoiceDetails[i].Price">
-                        <input asp-for="InvoiceDetails[i].RentalDate">
-                        <input asp-for="InvoiceDetails[i].ReturnedDate">
-                        <input asp-for="InvoiceDetails[i].RentalMethod">
-                        <input asp-for="InvoiceDetails[i].UnitPrice">
-                    }
-                    <div class="panel-body">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].CarId)</th>
-                                <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].RentalDate)</th>
-                                <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].ReturnedDate)</th>
-                                <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].Amount)</th>
-                                <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].RentalMethod)</th>
-                                <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].UnitPrice)</th>
-                                <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].Price)</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach (var item in Model.InvoiceDetails)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(x => item.CarId)</td>
-                                    <td>@Html.DisplayFor(x => item.RentalDate)</td>
-                                    <td>@Html.DisplayFor(x => item.ReturnedDate)</td>
-                                    <td>@Html.DisplayFor(x => item.Amount)</td>
-                                    <td>@item.RentalMethod.GetDescription()</td>
-                                    <td class="price">@Html.DisplayFor(x => item.UnitPrice)</td>
-                                    <td class="price">@Html.DisplayFor(x => item.Price)</td>
-                                </tr>
-                            }
-                            </tbody>
-                        </table>
-                        
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="Total" class="control-label"></label>
-                            <input readonly asp-for="Total" class="form-control price"/>
-                            <span asp-validation-for="Total" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="Prepay" class="control-label"></label>
-                            <input readonly asp-for="Prepay" class="form-control price"/>
-                            <span asp-validation-for="Prepay" class="text-danger"></span>
-                        </fieldset>
-
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="PayOff" class="control-label"></label>
-                            <input asp-for="PayOff" class="form-control price"/>
-                            <span asp-validation-for="PayOff" class="text-danger"></span>
-                        </fieldset>
-                        
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="Debt" class="control-label"></label>
-                            <input readonly asp-for="Debt" class="form-control price"/>
-                            <span asp-validation-for="Debt" class="text-danger"></span>
-                        </fieldset>
-                        
-                        <fieldset class="form-floating mb-3">
-                            <label asp-for="Content" class="control-label"></label>
-                            <textarea asp-for="Content" class="form-control"></textarea>
-                            <span asp-validation-for="Content" class="text-danger"></span>
-                        </fieldset>
-                    </div>
-                </div>
-
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Money" class="control-label"></label>
+                    <input asp-for="Money" class="form-control"/>
+                    <span asp-validation-for="Money" class="text-danger"></span>
+                </fieldset>
+                
                 <div class="text-right">
                     <a class="btn btn-default" id="cancel">Huỷ</a>
                     <button class="btn btn-primary" type="submit">Xuất hoá đơn</button>
@@ -152,19 +50,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts
-{
-    <script>
-        $(function (){
-            $('input[name=PayOff]').change(function (){
-                const total = $('input[name=Total]').val();
-                const prepay = $('input[name=Prepay]').val();
-                const payOff = $('input[name=PayOff]').val();
-                const debt = parseMoney(total) - parseMoney(prepay) - parseMoney(payOff);
-                $('input[name=Debt]').val(formatMoney(Math.max(0,debt)));
-            });
-        })
-    
-    </script>
-}

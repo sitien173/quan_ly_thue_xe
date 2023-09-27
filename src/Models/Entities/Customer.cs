@@ -6,7 +6,6 @@ public class Customer
     {
         Licenses = new List<License>();
         Notifications = new List<Notification>();
-        Contracts = new List<Contract>();
         Follows = new List<Follow>();
         RentRequests = new List<RentRequest>();
     }
@@ -40,7 +39,6 @@ public class Customer
     public string RearPhotoThumb { get; set; }
     public ICollection<License> Licenses { get; set; }
     public ICollection<Notification> Notifications { get; set; }
-    public ICollection<Contract> Contracts { get; set; }
     public ICollection<Follow> Follows { get; set; }
     public ICollection<RentRequest> RentRequests { get; set; }
 }

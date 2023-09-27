@@ -6,7 +6,7 @@ namespace CarRentalManagement.Models.ViewModel.DamagesManagement;
 
 public class ListDamagesViewModel
 {
-    [Display(Name = "Mã xe")]
+    [Display(Name = "Mã sửa chữa")]
     public int Id { get; set; }
     
     [Display(Name = "Mã xe")]
@@ -17,13 +17,10 @@ public class ListDamagesViewModel
     
     [Display(Name = "Chi phí sửa chữa")]
     [DataType(DataType.Text)]
-    public decimal RepairCost { get; set; }
+    public decimal TotalRepairCost { get; set; }
     
     [Display(Name = "Ngày hư hỏng")]
     public DateTime? DamagedAt { get; set; }
-    
-    [Display(Name = "Mô tả")]
-    public string? Description { get; set; }
     
     [Display(Name = "Ngày tạo")]
     public DateTime CreatedAt { get; set; }

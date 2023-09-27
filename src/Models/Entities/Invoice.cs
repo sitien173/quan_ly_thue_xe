@@ -2,22 +2,15 @@
 
 public class Invoice
 {
-    public Invoice()
-    {
-        InvoiceDetails = new List<InvoiceDetail>();
-    }
     public int Id { get; set; }
     public int ContractId { get; set; }
-    public PayMethodEnum PayMethodEnum { get; set; }
-    public decimal Prepay { get; set; }
-    public decimal Debt { get; set; }
-    public decimal PayOff { get; set; }
-    public decimal Total { get; set; }
-    public string? Content { get; set; }
-    public int TotalCarRental { get; set; }
+    public string Content { get; set; } = null!;
+    public decimal UnitPrice { get; set; }
+    public decimal TotalPriceWithVat { get; set; }
+    public int Vat { get; set; } = 10;
+    public string Money { get; set; } = null!;
     public int CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; }
     public bool IsDeleted { get; set; }
     public Contract Contract { get; set; }
-    public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
 }

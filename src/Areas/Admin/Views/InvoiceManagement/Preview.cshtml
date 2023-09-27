@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using CarRentalManagement.Extensions
-@using CarRentalManagement.Models.Settings
+﻿@using CarRentalManagement.Models.Settings
 @using Microsoft.Extensions.Options
 @inject IOptions<CompanySettings> CompanySettings
 @model CarRentalManagement.Models.ViewModel.InvoiceManagement.PreviewInvoiceViewModel
@@ -11,7 +9,7 @@
 
 <div class="container-fluid mr-top-20" xmlns="http://www.w3.org/1999/html">
     <div class="panel panel-primary">
-        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-heading">HÓA ĐƠN GIÁ TRỊ GIA TĂNG</div>
         <div class="panel-body">
             <div id="contentEdit">
                 <div class="text-right">
@@ -23,7 +21,8 @@
                 </div>
                 <hr>
                 <p style="text-align:center">
-                    <strong>HOÁ ĐƠN THANH TOÁN</strong>
+                    <strong>HÓA ĐƠN GIÁ TRỊ GIA TĂNG</strong>
+                    <strong>(VAT INVOICE)</strong>
                 </p>
                 <p style="text-align:center">
                     <em>(Số: @Model.Id)</em>
@@ -41,44 +40,12 @@
                 <p>CMND/Thẻ CCCD/Hộ chiếu số: @Model.CustomerDetail.IDCard - Cấp ngày: @Model.CustomerDetail.DateOfIssue.ToString(Constant.DateFormat) - Nơi cấp: @Model.CustomerDetail.PlaceOfIssue</p>
                 <p>Địa chỉ thường trú: @Model.CustomerDetail.Domicile</p>
                 <p>Địa chỉ tạm trú: @Model.CustomerDetail.TempAccommodation</p>
-                <div>
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].CarId)</th>
-                            <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].RentalDate)</th>
-                            <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].ReturnedDate)</th>
-                            <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].Amount)</th>
-                            <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].RentalMethod)</th>
-                            <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].UnitPrice)</th>
-                            <th>@Html.DisplayNameFor(x => x.InvoiceDetails[0].Price)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var item in Model.InvoiceDetails)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(x => item.CarId)</td>
-                                <td>@Html.DisplayFor(x => item.RentalDate)</td>
-                                <td>@Html.DisplayFor(x => item.ReturnedDate)</td>
-                                <td>@Html.DisplayFor(x => item.Amount)</td>
-                                <td>@item.RentalMethod.GetDescription()</td>
-                                <td class="price">@Html.DisplayFor(x => item.UnitPrice)</td>
-                                <td class="price">@Html.DisplayFor(x => item.Price)</td>
-                            </tr>
-                        }
-                        </tbody>
-                        <tfoot>Tổng số xe thuê: @Model.TotalCarRental</tfoot>
-                    </table>
-                    <div>
-                        <p>Tổng cộng: <span class="price">@Model.Total</span></p>
-                        <p>Đưa trước: <span class="price">@Model.Prepay</span></p>
-                        <p>Thanh toán: <span class="price">@Model.PayOff</span></p>
-                        <p>Còn lại: <span class="price">@Model.Debt</span></p>
-                        <p>Hình thức thanh toán: @Model.PayMethodEnum.GetDescription()</p>
-                        <p>Nội dung thanh toán: @Model.Content</p>
-                    </div>
-                </div>
+                @Html.Raw(Model.Content)
+                <p>Phương thức thanh toán: Tiền mặt</p>
+                <p>Cộng tiền hàng (Sub total): <span class="price">@Model.UnitPrice</span></p>
+                <p>Thuế suất GTGT (VAT rate): @Model.Vat %</p>
+                <p>Tổng cộng tiền thanh toán (Total payment): <span class="price">@Model.TotalPriceWithVat %</span></p>
+                <p>Số tiền viết bằng chữ: <span class="price">@Model.Money</span></p>
                 <table style="border-collapse:collapse;width:100%" width="100%">
                     <tbody>
                     <tr>

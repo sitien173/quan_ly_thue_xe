@@ -1,4 +1,5 @@
 ﻿using CarRentalManagement.Interceptors.Filter;
+using CarRentalManagement.Models.ViewModel.ContractManagement;
 using CarRentalManagement.Models.ViewModel.InvoiceManagement;
 using CarRentalManagement.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -10,10 +11,14 @@ namespace CarRentalManagement.Areas.Admin.Controllers;
 public class InvoiceManagementController : AreaControllerBase
 {
     private readonly IInvoiceService _invoiceService;
+    private readonly ICustomerService _customerService;
+    private readonly IContractService _contractService;
 
-    public InvoiceManagementController(IInvoiceService invoiceService)
+    public InvoiceManagementController(IInvoiceService invoiceService, ICustomerService customerService, IContractService contractService)
     {
         _invoiceService = invoiceService;
+        _customerService = customerService;
+        _contractService = contractService;
     }
 
     public async Task<IActionResult> Index()
@@ -24,15 +29,20 @@ public class InvoiceManagementController : AreaControllerBase
     
     public IActionResult PrepareAdd()
     {
-        return View();
+        var model = new AddInvoiceViewModel()
+        {
+            ReturnUrl = Request.Headers["Referer"].ToString(),
+            CreatedBy = UserId,
+            CreatedAt = DateTime.Now
+        };
+        
+        return View(model);
     }
 
     [HttpPost]
-    [HandlerException]
-    public async Task<IActionResult> PrepareAdd([FromForm] int contractId)
+    public IActionResult PrepareAdd([FromForm] AddInvoiceViewModel model)
     {
-        var model = await _invoiceService.PrepareAddAsync(contractId).ConfigureAwait(false);
-        model.ReturnUrl = Request.Headers["Referer"].ToString();
+        model.Content = Constant.InvoiceContentTemplate;
         return View("Add", model);
     }
     

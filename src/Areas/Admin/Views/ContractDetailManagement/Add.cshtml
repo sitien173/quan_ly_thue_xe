@@ -1,9 +1,15 @@
 ﻿@using CarRentalManagement.Extensions
+@using CarRentalManagement.Services
 @model CarRentalManagement.Models.ViewModel.ContractManagement.AddContractViewModel
+@inject IRentRequestService RentRequestService
+@inject ICarService CarService
 
 @{
     ViewBag.Title = "Thêm chi tiết hợp đồng";
     Layout = "_Layout";
+    
+    var rentRequestSelectList = await RentRequestService.ListAsync<SelectListItem>().ConfigureAwait(false);
+    var carSelectListItems = await CarService.ListAsync<SelectListItem>().ConfigureAwait(false);
 }
 <div class="container-fluid mr-top-20">
     <form asp-action="Add" method="post" class="panel panel-primary">
@@ -18,17 +24,17 @@
                     <input asp-for="CreatedBy"/>
 
                     <fieldset class="form-floating mb-3">
-                        <label asp-for="CustomerId" class="control-label"></label>
-                        <select asp-for="CustomerId" asp-items="Model.CustomerSelectListItems" class="form-control chosen"></select>
-                        <span asp-validation-for="CustomerId" class="text-danger"></span>
+                        <label asp-for="RentRequestId" class="control-label"></label>
+                        <select asp-for="RentRequestId" asp-items="rentRequestSelectList" class="form-control chosen"></select>
+                        <span asp-validation-for="RentRequestId" class="text-danger"></span>
                     </fieldset>
 
                     <fieldset class="form-floating mb-3">
-                        <label asp-for="TotalCarRent" class="control-label"></label>
-                        <input asp-for="TotalCarRent" class="form-control"/>
-                        <span asp-validation-for="TotalCarRent" class="text-danger"></span>
+                        <label asp-for="Prepay" class="control-label"></label>
+                        <input asp-for="Prepay" class="form-control price"/>
+                        <span asp-validation-for="Prepay" class="text-danger"></span>
                     </fieldset>
-
+                    
                     <fieldset class="form-floating mb-3">
                         <label asp-for="Note" class="control-label"></label>
                         <textarea asp-for="Note" class="form-control"></textarea>
@@ -48,7 +54,7 @@
                             <div class="panel-body">
                                 <fieldset class="form-floating mb-3">
                                     <label asp-for="ContractDetails[i].CarId" class="control-label"></label>
-                                    <select asp-for="ContractDetails[i].CarId" asp-items="Model.CarSelectListItems" class="form-control chosen"></select>
+                                    <select asp-for="ContractDetails[i].CarId" asp-items="carSelectListItems" class="form-control chosen"></select>
                                     <span asp-validation-for="ContractDetails[i].CarId" class="text-danger"></span>
                                 </fieldset>
 

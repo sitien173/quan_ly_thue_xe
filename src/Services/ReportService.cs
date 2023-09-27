@@ -39,7 +39,7 @@ public class ReportService : IReportService
             .Select(group => new 
             {
                 Label = group.Key.ToString(),
-                Value = group.Sum(x => x.Total - x.Debt)
+                Value = group.Sum(x => x.TotalPriceWithVat)
             })
             .ToListAsync().ConfigureAwait(false);
 
