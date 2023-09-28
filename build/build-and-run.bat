@@ -1,0 +1,1 @@
+git pull & dotnet build & call .\update-database.bat & dotnet run
