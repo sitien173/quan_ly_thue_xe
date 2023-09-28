@@ -64,7 +64,7 @@ public class CarService : CrudService<Car, int>, ICarService
     public async Task<List<CarGalleryViewModel>> GetCarGalleriesAsync(int id)
     {
         var entity = await FindOrElseThrowAsync(id).ConfigureAwait(false);
-        await DbSet.Entry(entity).Collection(x => x.CarPhotoGalleries).LoadAsync();
+        await DbSet.Attach(entity).Collection(x => x.CarPhotoGalleries).LoadAsync();
         return entity.CarPhotoGalleries
             .Select(x => new CarGalleryViewModel { Id = x.Id, Url = x.Url, ThumbUrl = x.ThumbUrl })
             .ToList();
@@ -73,7 +73,7 @@ public class CarService : CrudService<Car, int>, ICarService
     public async Task EditCarGalleriesAsync(EditCarGalleryViewModel model)
     {
         var entity = await FindOrElseThrowAsync(model.CarId).ConfigureAwait(false);
-        await DbSet.Entry(entity).Collection(x => x.CarPhotoGalleries).LoadAsync();
+        await DbSet.Attach(entity).Collection(x => x.CarPhotoGalleries).LoadAsync();
 
         var changeCarGalleryViewModels = model.ChangeCarGalleryViewModels
             .Where(x => x.UploadImage != null).ToArray();
@@ -154,7 +154,7 @@ public class CarService : CrudService<Car, int>, ICarService
         Guard.Against.Null(entity);
         Guard.Against.AgainstExpression(x => x, !entity.IsRepairing, _carIsRepairing);
 
-        bool isAvailable = IsCarAvailable(entity.RentRequests, model.StartDate, model.EndDate);
+        bool isAvailable = entity.RentRequests.All(x => (x.ReturnedDate < model.StartDate || x.RentalDate > model.EndDate) && !x.IsDeleted);
         Guard.Against.InvalidInput(isAvailable, string.Empty, x => x, _carIsNotAvailable);
         
         var estimate = await Context.Estimate.FindAsync(model.EstimateId).ConfigureAwait(false);
@@ -176,15 +176,10 @@ public class CarService : CrudService<Car, int>, ICarService
         await Context.SaveChangesAsync().ConfigureAwait(false);
     }
     
-    private static bool IsCarAvailable<T>(IEnumerable<T> collection, DateTime? startDate, DateTime? endDate)
-    {
-        return collection.AllDynamic(x => "(x.ReturnedDate < startDate || x.RentalDate > endDate) && x.IsDeleted == false", new {startDate, endDate});
-    }
-
     public async Task FollowCarAsync(int id, int userId)
     {
         var entity = await FindOrElseThrowAsync(id).ConfigureAwait(false);
-        var entryCar = DbSet.Entry(entity);
+        var entryCar = DbSet.Attach(entity);
         
         await entryCar.Collection(x => x.Follows).LoadAsync().ConfigureAwait(false);
         
@@ -202,7 +197,7 @@ public class CarService : CrudService<Car, int>, ICarService
     public async Task UnFollowCarAsync(int id, int userId)
     {
         var entity = await FindOrElseThrowAsync(id).ConfigureAwait(false);
-        var entryCar = DbSet.Entry(entity);
+        var entryCar = DbSet.Attach(entity);
         
         await entryCar.Collection(x => x.Follows).LoadAsync().ConfigureAwait(false);
         

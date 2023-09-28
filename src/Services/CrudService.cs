@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Linq.Dynamic.Core;
+using AutoMapper;
 using CarRentalManagement.Data;
-using Z.EntityFramework.Plus;
 
 namespace CarRentalManagement.Services;
 
@@ -46,8 +46,8 @@ public class CrudService<TEntity, TKey> : ReadOnlyService<TEntity, TKey>, ICrudS
     public virtual Task DeleteAsync(TKey id)
     {
         return DbSet
-            .WhereDynamic(x => "x.Id == id && !x.IsDeleted", new { id })
-            .UpdateAsync(new Dictionary<string, object>()
+            .Where("Id == @0 && IsDeleted == @false", id, false)
+            .UpdateFromQueryAsync(new Dictionary<string, object>()
             {
                 { "IsDeleted", true }
             });
@@ -56,8 +56,8 @@ public class CrudService<TEntity, TKey> : ReadOnlyService<TEntity, TKey>, ICrudS
     public virtual Task<int> DeleteAsync(IEnumerable<TKey> ids)
     {
         return DbSet
-            .WhereDynamic(x => "ids.Contains(x.Id) && !x.IsDeleted", new { ids })
-            .UpdateAsync(new Dictionary<string, object>()
+            .Where("@0.Contains(Id) && !IsDeleted", ids)
+            .UpdateFromQueryAsync(new Dictionary<string, object>()
             {
                 { "IsDeleted", true }
             });

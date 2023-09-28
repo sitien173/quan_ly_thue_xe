@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -34,7 +35,7 @@ public class ReadOnlyService<TEntity, TKey> : IReadOnlyService<TEntity, TKey> wh
     {
         return DbSet
             .AsNoTracking()
-            .WhereDynamic(x => "!x.IsDeleted")
+            .Where("IsDeleted == @0", false)
             .AddWhereClause(predicate!, predicate is not null)
             .ProjectTo<TDest>(Mapper.ConfigurationProvider)
             .ToListAsync();
@@ -43,7 +44,7 @@ public class ReadOnlyService<TEntity, TKey> : IReadOnlyService<TEntity, TKey> wh
     public virtual async Task<TDest> GetAsync<TDest>(TKey id)
     {
         var viewModel = await DbSet
-            .WhereDynamic(x => "x.Id == id && !x.IsDeleted", new { id })
+            .Where("Id == @0 && IsDeleted == @1", id, false)
             .AsNoTracking()
             .ProjectTo<TDest>(Mapper.ConfigurationProvider)
             .FirstOrDefaultAsync().ConfigureAwait(false);

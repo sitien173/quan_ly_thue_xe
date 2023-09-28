@@ -13,26 +13,28 @@
       <PackageReference Include="AutoMapper" Version="12.0.1" />
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
       <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
-      <PackageReference Include="EntityFrameworkProfiler.Appender" Version="6.0.6040" />
       <PackageReference Include="MailKit" Version="3.5.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.1.23111.4">
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.22">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="7.3.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-preview.1.23111.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.3.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.22" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.22" />
       <PackageReference Include="MimeKit" Version="3.5.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3-beta1" />
       <PackageReference Include="OneOf" Version="3.0.223" />
       <PackageReference Include="Scrutor" Version="4.2.1" />
-      <PackageReference Include="Serilog" Version="3.0.0-dev-01884" />
+      <PackageReference Include="Serilog" Version="3.0.1" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
-      <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="7.18.5" />
+      <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+      <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="6.100.0.2" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Repositories\" />
       <Folder Include="wwwroot\images" />
+      <Folder Include="wwwroot\libs\" />
       <Folder Include="wwwroot\uploads\thumbs" />
     </ItemGroup>
 
@@ -78,6 +80,10 @@
       <_ContentIncludedByDefault Remove="Areas\Admin\Views\AccidentManagement\Add.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\Admin\Views\AccidentManagement\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\Admin\Views\AccidentManagement\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="wwwroot\libs\froala-editor\.github\ISSUE_TEMPLATE.md" />
     </ItemGroup>
 
 </Project>

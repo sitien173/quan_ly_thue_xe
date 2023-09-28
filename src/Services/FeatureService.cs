@@ -1,13 +1,6 @@
-﻿using System.Linq.Expressions;
-using Ardalis.GuardClauses;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using CarRentalManagement.Common;
+﻿using AutoMapper;
 using CarRentalManagement.Data;
 using CarRentalManagement.Models.Entities;
-using CarRentalManagement.Models.ViewModel.FeatureManagement;
-using Microsoft.EntityFrameworkCore;
-using Z.EntityFramework.Plus;
 
 namespace CarRentalManagement.Services;
 

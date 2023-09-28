@@ -26,7 +26,7 @@ public class ContractManagementController : AreaControllerBase
         return View(model);
     }
     
-    public async Task<IActionResult> Add()
+    public IActionResult Add()
     {
         var model = new AddContractViewModel()
         {

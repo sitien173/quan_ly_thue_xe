@@ -11,10 +11,6 @@ namespace CarRentalManagement.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "IsTerminationMinutes",
-                table: "Contract");
-
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
                 table: "Notification",
@@ -49,13 +45,6 @@ namespace CarRentalManagement.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
                 oldDefaultValue: new DateTime(2023, 9, 28, 14, 3, 58, 984, DateTimeKind.Local).AddTicks(5501));
-
-            migrationBuilder.AddColumn<bool>(
-                name: "IsTerminationMinutes",
-                table: "Contract",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
         }
     }
 }

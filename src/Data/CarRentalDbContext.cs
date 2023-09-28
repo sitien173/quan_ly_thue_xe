@@ -352,6 +352,7 @@ public class CarRentalDbContext : DbContext
             .WithMany(x => x.Receipts)
             .HasForeignKey(x => x.ContractId);
         receipt.Property(x => x.Price).HasPrecision(_sizeDecimal, _sizeDecimalScale);
+        
         base.OnModelCreating(modelBuilder);
     }
 }

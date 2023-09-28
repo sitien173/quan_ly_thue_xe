@@ -1,0 +1,75 @@
+{
+  "_args": [
+    [
+      "datatables.net@1.13.3",
+      "D:\\Project\\TTTN\\CarRentalManagement\\src"
+    ]
+  ],
+  "_from": "datatables.net@1.13.3",
+  "_id": "datatables.net@1.13.3",
+  "_inBundle": false,
+  "_integrity": "sha512-YVnz02oJsaP/OfnclBlqHkuV1il60sSVa+a0Xvs5gyiDLftmAxc+rvVAwCm7O0OpKo09N43k6EcCAf3L9WYI7g==",
+  "_location": "/datatables.net",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net@1.13.3",
+    "name": "datatables.net",
+    "escapedName": "datatables.net",
+    "rawSpec": "1.13.3",
+    "saveSpec": null,
+    "fetchSpec": "1.13.3"
+  },
+  "_requiredBy": [
+    "/datatables.net-buttons",
+    "/datatables.net-dt"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net/-/datatables.net-1.13.3.tgz",
+  "_spec": "1.13.3",
+  "_where": "D:\\Project\\TTTN\\CarRentalManagement\\src",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "description": "jQuery DataTables",
+  "files": [
+    "js/**/*.js",
+    "js/**/*.mjs",
+    "types/**/*.d.ts"
+  ],
+  "homepage": "https://datatables.net",
+  "ignore": [
+    "composer.json",
+    "datatables.json",
+    "package.json"
+  ],
+  "keywords": [
+    "Datatables",
+    "jQuery",
+    "table",
+    "filter",
+    "sort"
+  ],
+  "license": "MIT",
+  "main": "js/jquery.dataTables.js",
+  "module": "js/jquery.dataTables.mjs",
+  "moduleType": [
+    "globals",
+    "amd",
+    "node"
+  ],
+  "name": "datatables.net",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables.git"
+  },
+  "types": "./types/types.d.ts",
+  "version": "1.13.3"
+}
