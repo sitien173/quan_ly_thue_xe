@@ -4,6 +4,7 @@ using CarRentalManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalManagement.Migrations
 {
     [DbContext(typeof(CarRentalDbContext))]
-    partial class CarRentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230928023639_632A1451-0E5C-4326-A6CB-A642F5AE74C2")]
+    partial class _632A14510E5C4326A6CBA642F5AE74C2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,6 +312,9 @@ namespace CarRentalManagement.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsTerminationMinutes")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
@@ -318,9 +324,6 @@ namespace CarRentalManagement.Migrations
 
                     b.Property<int>("RentRequestId")
                         .HasColumnType("int");
-
-                    b.Property<short>("Status")
-                        .HasColumnType("smallint");
 
                     b.Property<decimal>("Total")
                         .HasPrecision(12)
@@ -782,7 +785,7 @@ namespace CarRentalManagement.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 9, 28, 14, 3, 58, 984, DateTimeKind.Local).AddTicks(5501));
+                        .HasDefaultValue(new DateTime(2023, 9, 28, 9, 36, 39, 441, DateTimeKind.Local).AddTicks(4824));
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -838,16 +841,12 @@ namespace CarRentalManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Money")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(12)
-                        .HasColumnType("decimal(12,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Type")
                         .IsRequired()

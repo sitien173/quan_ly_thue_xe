@@ -18,10 +18,12 @@ public class AddInvoiceViewModel
     
     [Required(AllowEmptyStrings = false, ErrorMessage = "Sub total không được để trống")]
     [Display(Name = "Cộng tiền hàng (Sub total)")]
+    [DataType(DataType.Text)]
     public decimal UnitPrice { get; set; }
     
     [Required(AllowEmptyStrings = false, ErrorMessage = "Total payment không được để trống")]
     [Display(Name = "Tổng cộng tiền thanh toán (Total payment)")]
+    [DataType(DataType.Text)]
     public decimal TotalPriceWithVat { get; set; }
     
     [Required(AllowEmptyStrings = false, ErrorMessage = "Thuế không được để trống")]

@@ -65,6 +65,7 @@ public class ContractManagementController : AreaControllerBase
     }
     
     [HttpPost]
+    [HandlerException]
     public async Task<IActionResult> SubmitContract([FromForm] AddContractViewModel model)
     {
         var contractId = await _contractService.AddAsync(model).ConfigureAwait(false);
@@ -95,7 +96,23 @@ public class ContractManagementController : AreaControllerBase
     {
         var update = new Dictionary<string, object>()
         {
-            { nameof(Contract.IsTerminationMinutes), true }
+            { nameof(Contract.Status), ContractStatusEnum.Finished }
+        };
+        
+        await _contractService.UpdateAsync(update, id).ConfigureAwait(false);
+        
+        var model = await _contractService.GetAsync<PreviewContractViewModel>(id).ConfigureAwait(false);
+        
+        return View(model);
+    }
+
+    [HttpPost]
+    [HandlerException]
+    public async Task<IActionResult> Cancellation([FromForm] int id)
+    {
+        var update = new Dictionary<string, object>()
+        {
+            { nameof(Contract.Status), ContractStatusEnum.Canceled }
         };
         
         await _contractService.UpdateAsync(update, id).ConfigureAwait(false);

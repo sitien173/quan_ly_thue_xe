@@ -25,6 +25,7 @@ public class CarRentalDbContext : DbContext
     public DbSet<SurCharge> SurCharge { get; set; }
     public DbSet<Contact> Contact { get; set; }
     public DbSet<Damages> Damages { get; set; }
+    public DbSet<Receipt> Receipts { get; set; }
     
     public CarRentalDbContext(DbContextOptions<CarRentalDbContext> options)
         : base(options)
@@ -336,6 +337,21 @@ public class CarRentalDbContext : DbContext
         
         damage.Property(x => x.TotalRepairCost).HasPrecision(_sizeDecimal, _sizeDecimalScale);
         
+        var receipt = modelBuilder.Entity<Receipt>();
+        receipt.HasKey(x => x.Id);
+        receipt.Property(x => x.Id)
+            .UseIdentityColumn();
+        
+        receipt.Property(x => x.Type)
+            .HasConversion(
+                v => v.ToString(),
+                v => (ReceiptTypeEnum)Enum.Parse(typeof(ReceiptTypeEnum), v))
+            .IsUnicode(false);
+        
+        receipt.HasOne(x => x.Contract)
+            .WithMany(x => x.Receipts)
+            .HasForeignKey(x => x.ContractId);
+        receipt.Property(x => x.Price).HasPrecision(_sizeDecimal, _sizeDecimalScale);
         base.OnModelCreating(modelBuilder);
     }
 }

@@ -1,0 +1,98 @@
+﻿@using CarRentalManagement.Models.Settings
+@using Microsoft.Extensions.Options
+@inject IOptions<CompanySettings> CompanySettings
+@using CarRentalManagement.Extensions
+@model CarRentalManagement.Models.ViewModel.ReceiptManagement.PreviewReceiptViewModel
+@{
+    ViewBag.Title = "Phiếu thu/ chi";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid mr-top-20" xmlns="http://www.w3.org/1999/html">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <div id="contentEdit">
+                <div class="row">
+                    <div class="col-md-6 text-left">
+                        <p>Tên công ty: @CompanySettings.Value.Name - Mã số thuế: @CompanySettings.Value.TaxCode</p>
+                        <p>Địa chỉ: @CompanySettings.Value.Address</p>
+                        <p>Website: @CompanySettings.Value.Website</p>
+                        <p>Email: @CompanySettings.Value.Email</p>
+                        <p>Số điện thoại: @CompanySettings.Value.Phone</p>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <p>
+                            <strong>Mẫu số 01 - TT</strong>
+                        </p>
+                        <p>(Ban hành theo thông tư số 132/2018/TT-BTC ngày 28/12/2018 của bộ Tài Chính)</p>
+                    </div>
+                </div>
+                <hr>
+                <div style="text-align:center">
+                    <p><strong>@Model.Type.GetDescription()</strong></p>
+                    <p>Ngày @Model.CreatedAt.Day..tháng @Model.CreatedAt.Month..năm @Model.CreatedAt.Year.. </p>
+                </div>
+                <p style="text-align:center">
+                    <em>(Số: @Model.Id)</em>
+                </p>
+                @if (Model.Type == ReceiptTypeEnum.In)
+                {
+                    <p>Họ tên người nộp tiền: @Model.FullName</p>
+                }
+                else
+                {
+                    <p>Họ tên người nhận tiền: @Model.FullName</p>
+                }
+                <p>Địa chỉ: @Model.Address</p>
+                @if (Model.Type == ReceiptTypeEnum.In)
+                {
+                    <p>Lý do nộp : @Model.Content</p>
+                }
+                else
+                {
+                    <p>Lý do chi : @Model.Content</p>
+                }
+                <p>Số tiền: <span class="price">@Model.Price</span> (Viết bằng chữ): @Model.Money</p>
+                <p>Kèm theo: Hợp đồng thuê xe mã số @Model.ContractId làm chứng từ gốc.</p>
+                <div class="text-right">
+                    Ngày @DateTime.Today.Day tháng @DateTime.Today.Month năm @DateTime.Today.Year
+                </div>
+                    <table style="border-collapse:collapse;width:100%; border: white none">
+                        <tbody>
+                        <tr>
+                            <td style="text-align:center; border: white none">
+                                <p>
+                                    <strong>Giám đốc</strong>
+                                </p>
+                                <span><em>(Ký, họ tên, đóng dấu)</em></span>
+                            </td>
+                            <td style="text-align:center; border: white none">
+                                <p>
+                                    <strong>Kế toán trưởng</strong><strong> </strong>
+                                </p>
+                                <span><em>(Ký, họ tên)</em></span>
+                            </td>
+                            <td style="text-align:center; border: white none">
+                                <p>
+                                    <strong>Người nộp tiền</strong><strong> </strong>
+                                </p>
+                                <span><em>(Ký, họ tên)</em></span>
+                            </td>
+                            <td style="text-align:center; border: white none">
+                                <p>
+                                    <strong>Thủ quỹ</strong>
+                                </p>
+                                <span><em>(Ký, họ tên)</em></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+        <div class="panel-footer text-right">
+            <a type="button" class="btn btn-default" asp-action="Index">Thoát</a>
+            <button type="button" class="btn btn-primary print" data-contentId="contentEdit">In</button>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,10 @@
 ﻿@using CarRentalManagement.Extensions
-@model IEnumerable<CarRentalManagement.Models.ViewModel.ContractManagement.ListContractViewModel>
+@model IEnumerable<CarRentalManagement.Models.ViewModel.ReceiptManagement.ListReceiptViewModel>
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
-
+    
     string controller = Context.GetRouteValue("controller")!.ToString()!;
     string area = AreaManager.Admin;
 }
@@ -18,13 +18,14 @@
                 <input type="checkbox" id="select-all"/>
             </th>
             <th>@Html.DisplayNameFor(x => x.Id)</th>
+            <th>@Html.DisplayNameFor(x => x.Type)</th>
+            <th>@Html.DisplayNameFor(x => x.FullName)</th>
+            <th>@Html.DisplayNameFor(x => x.Address)</th>
+            <th>@Html.DisplayNameFor(x => x.Content)</th>
+            <th>@Html.DisplayNameFor(x => x.Price)</th>
             <th>@Html.DisplayNameFor(x => x.CreatedAt)</th>
-            <th>@Html.DisplayNameFor(x => x.RentRequestId)</th>
-            <th>@Html.DisplayNameFor(x => x.Total)</th>
-            <th>@Html.DisplayNameFor(x => x.Prepay)</th>
-            <th>@Html.DisplayNameFor(x => x.Status)</th>
-            <th>Thanh lý</th>
-            <th>Hủy</th>
+            <th>@Html.DisplayNameFor(x => x.CreatedBy)</th>
+            <th>@Html.DisplayNameFor(x => x.ContractId)</th>
             <th>Xoá</th>
         </tr>
         </thead>
@@ -37,37 +38,27 @@
                 </td>
                 <td>
                     <a asp-area="@area" asp-controller="@controller" asp-action="Preview" asp-route-id="@item.Id">
-                        @item.Id
+                       @item.Id
                     </a>
                 </td>
+                <td>
+                    @item.Type.GetDescription()
+                </td>
+                <td>@Html.DisplayFor(x => item.FullName)</td>
+                <td>@Html.DisplayFor(x => item.Address)</td>
+                <td>@Html.DisplayFor(x => item.Content)</td>
+                <td class="price">@Html.DisplayFor(x => item.Price)</td>
                 <td>@Html.DisplayFor(x => item.CreatedAt)</td>
                 <td>
-                    <a asp-area="Admin" asp-controller="RentRequestManagement" asp-action="Edit" asp-route-id="@item.RentRequestId">
-                        @item.RentRequestId
+                    <a asp-area="@area" asp-controller="EmployeeManagement" asp-action="Edit" asp-route-id="@item.CreatedBy">
+                        @item.CreatedBy
                     </a>
                 </td>
-                <td class="price">@Html.DisplayFor(x => item.Total)</td>
-                <td class="price">@Html.DisplayFor(x => item.Prepay)</td>
-                <td>@item.Status.GetDescription()</td>
-                @if (item.Status != ContractStatusEnum.Finished)
-                {
-                    <td>
-                        <form asp-action="TerminationMinutes" method="post">
-                            <input name="@nameof(item.Id)" type="hidden" value="@item.Id"/>
-                            <button type="submit" class="btn btn-success">Thanh lý</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form asp-action="Cancellation" method="post">
-                            <input name="@nameof(item.Id)" type="hidden" value="@item.Id"/>
-                            <button type="submit" class="btn btn-danger">Hủy hợp đồng</button>
-                        </form>
-                    </td>
-                }
-                else
-                {
-                    <td></td>
-                }
+                <td>
+                    <a asp-area="@area" asp-controller="ContractManagement" asp-action="Preview" asp-route-id="@item.ContractId">
+                        @item.ContractId
+                    </a>
+                </td>
                 <td>
                     <a class="confirmDelete" asp-area="@area" asp-controller="@controller" asp-action="Delete" asp-route-id="@item.Id">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>

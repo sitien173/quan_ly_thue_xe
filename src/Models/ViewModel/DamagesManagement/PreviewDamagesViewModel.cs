@@ -9,6 +9,7 @@ public class PreviewDamagesViewModel
     public int Id { get; set; }
     public int CarId { get; set; }
     public int ContractId { get; set; }
+    [DataType(DataType.Text)]
     public decimal TotalRepairCost { get; set; }
     public DateTime DamagedAt { get; set; }
     public string Content { get; set; } = null!;

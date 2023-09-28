@@ -12,7 +12,7 @@ public class CarFilterViewModel
     public int PageSize { get; set; } = 10;
     
     [Display(Name = "Tìm kiếm tên xe")]
-    [DataType(DataType.Password)]
+    [DataType(DataType.Text)]
     public string? TxtText { get; set; }
     
     [Display(Name = "Truyền động")]

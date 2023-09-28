@@ -125,7 +125,7 @@ public class CarService : CrudService<Car, int>, ICarService
         queryable = queryable.AddWhereClause(x => x.CarTypeId == model.CarTypeId, model.CarTypeId.HasValue);
         queryable = queryable.AddWhereClause(x => x.CarFeatures.Any(y => model.FeatureIds.Contains(y.FeatureId)), model.FeatureIds.Any());
         
-        bool hasValueRental = model is { RentalDate: { }, ReturnedDate: { } };
+        bool hasValueRental = model is { RentalDate: not null, ReturnedDate: not null };
         queryable = queryable.AddWhereClause(x => x.RentRequests.All(xx => (xx.ReturnedDate < model.RentalDate || xx.RentalDate > model.ReturnedDate) && !x.IsDeleted), hasValueRental);
         
         var responsePage = new Page<CarFilterResponseViewModel>

@@ -13,6 +13,7 @@ public class AddDamagesViewModel
     
     [Display(Name = "Chi phí sửa chữa")]
     [Required(AllowEmptyStrings = false, ErrorMessage = "Chi phí sửa chữa không được để trống")]
+    [DataType(DataType.Text)]
     public decimal TotalRepairCost { get; set; }
     
     [Display(Name = "Ngày hư hỏng")]

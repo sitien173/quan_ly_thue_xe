@@ -29,11 +29,9 @@ public class ListContractViewModel
     [Display(Name = "Ghi chú")]
     public string? Note{ get; set; }
     
-    public bool IsTerminationMinutes { set; get; }
+    [Display(Name = "Trạng thái")]
+    public ContractStatusEnum Status { get; set; }
     
-    [Display(Name = "Tình trạng")]
-    public string Status => IsTerminationMinutes ? ContractStatusEnum.Finished.GetDescription() : ContractStatusEnum.NotFinished.GetDescription();
-
     public class Mapper : Profile
     {
         public Mapper()

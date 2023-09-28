@@ -13,6 +13,13 @@
     var brandItems = await BrandService.ListAsync<SelectListItem>().ConfigureAwait(false);
     var carTypeItems = await CarTypeService.ListAsync<SelectListItem>().ConfigureAwait(false);
     var featureItems = await FeatureService.ListAsync<SelectListItem>().ConfigureAwait(false);
+    var fuelItems = FuelEnum.Diesel.ToSelectList().ToList();
+    var transmissionItems = TransmissionEnum.Automatic.ToSelectList().ToList();
+    
+    brandItems.Add(new SelectListItem("", "", true));
+    carTypeItems.Add(new SelectListItem("", "", true));
+    fuelItems.Add(new SelectListItem("", "", true));
+    transmissionItems.Add(new SelectListItem("", "", true));
 
     var carFilter = ViewData[HomeController.Key] as Page<CarRentalManagement.Models.ViewModel.Home.CarFilterResponseViewModel>;
 }
@@ -26,11 +33,11 @@
             </fieldset>
             <fieldset class="form-group-sm mb-3">
                 <label asp-for="TransmissionEnum"></label>
-                <select data-placeholder="Chọn truyền động" asp-for="TransmissionEnum" class="form-control chosen" asp-items="@TransmissionEnum.Automatic.ToSelectList()"></select>
+                <select data-placeholder="Chọn truyền động" asp-for="TransmissionEnum" class="form-control chosen" asp-items="transmissionItems"></select>
             </fieldset>
             <fieldset class="form-group-sm mb-3">
                 <label asp-for="FuelEnum"></label>
-                <select data-placeholder="Chọn nhiên liệu" asp-for="FuelEnum" class="form-control chosen" asp-items="@FuelEnum.Diesel.ToSelectList()"></select>
+                <select data-placeholder="Chọn nhiên liệu" asp-for="FuelEnum" class="form-control chosen" asp-items="fuelItems"></select>
             </fieldset>
             <fieldset class="form-group-sm mb-3">
                 <label asp-for="Seat"></label>

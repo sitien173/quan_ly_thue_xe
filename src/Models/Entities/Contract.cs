@@ -2,12 +2,6 @@
 
 public class Contract
 {
-    public Contract()
-    {
-        ContractDetails = new List<ContractDetail>();
-        Invoices = new List<Invoice>();
-        CarTransferAgreements = new List<CarTransferAgreement>();
-    }
     public int Id { get; set; }
     public decimal Total { get; set; }
     public decimal Prepay { get; set; }
@@ -15,10 +9,11 @@ public class Contract
     public DateTime CreatedAt{ get; set; }
     public int CreatedBy{ get; set; }
     public string? Note{ get; set; }
-    public bool IsTerminationMinutes{ get; set; }
-    public ICollection<ContractDetail> ContractDetails { get; set; }
-    public ICollection<Invoice> Invoices { get; set; }
-    public ICollection<CarTransferAgreement> CarTransferAgreements { get; set; }
+    public ContractStatusEnum Status { get; set; }
+    public ICollection<ContractDetail> ContractDetails { get; set; } = new List<ContractDetail>();
+    public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
+    public ICollection<CarTransferAgreement> CarTransferAgreements { get; set; } = new List<CarTransferAgreement>();
+    public ICollection<Receipt> Receipts { get; set; } = new List<Receipt>();
     public Damages? Damages { get; set; }
     public int RentRequestId { get; set; }
     public RentRequest RentRequest { get; set; }

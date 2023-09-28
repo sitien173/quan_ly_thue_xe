@@ -18,9 +18,11 @@ public class ListInvoiceViewModel
     public DateTime CreatedAt { get; set; }
     
     [Display(Name = "Sub total")]
+    [DataType(DataType.Text)]
     public decimal UnitPrice { get; set; }
     
     [Display(Name = "Total payment")]
+    [DataType(DataType.Text)]
     public decimal TotalPriceWithVat { get; set; }
     
     [Display(Name = "VAT amount")]
