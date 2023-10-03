@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = Role.ParkingAttendant)]
+[Authorize(Policy = nameof(PolicyEnum.ParkingAttendant))]
 public class CarManagementController : AreaControllerBase
 {
     private readonly ICarService _carService;

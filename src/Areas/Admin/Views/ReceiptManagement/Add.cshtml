@@ -1,8 +1,12 @@
 ﻿@using CarRentalManagement.Extensions
+@using CarRentalManagement.Services
 @model CarRentalManagement.Models.ViewModel.ReceiptManagement.AddReceiptViewModel
+@inject IContractService ContractService
+
 @{
     ViewBag.Title = "Thêm phiếu thu/ chi";
     Layout = "_Layout";
+    var contractSelectListItems = await ContractService.ListAsync<SelectListItem>();
 }
 <div class="container-fluid mr-top-20">
     <div class="panel panel-primary">
@@ -11,11 +15,16 @@
             <form asp-action="Add" method="post">
                 <input asp-for="ReturnUrl">
                 <input asp-for="CreatedBy">
-                <input asp-for="ContractId">
                 <input asp-for="CreatedAt">
+
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="ContractId" class="control-label required"></label>
+                    <select asp-for="ContractId" asp-items="contractSelectListItems" required class="form-control chosen">
+                    </select>
+                </fieldset>
                 
                 <fieldset class="form-floating mb-3">
-                    <label class="control-label required">Mã hợp đồng</label>
+                    <label asp-for="Type" class="control-label required"></label>
                     <select asp-for="Type" asp-items="ReceiptTypeEnum.In.ToSelectList()" required class="form-control chosen">
                     </select>
                 </fieldset>
@@ -52,7 +61,7 @@
                 
                 <div class="text-right">
                     <a class="btn btn-default" id="cancel">Huỷ</a>
-                    <button class="btn btn-primary" type="submit">Thêm</button>
+                    <button class="btn btn-primary" type="submit">Lưu và in</button>
                 </div>
             </form>
         </div>

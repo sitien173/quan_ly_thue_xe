@@ -6,15 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
-[Authorize(Roles = Role.Accountant)]
+[Authorize(Policy = nameof(PolicyEnum.Accountant))]
 public class ReceiptManagementController : AreaControllerBase
 {
     private readonly IReceiptService _receiptService;
-    private readonly IContractService _contractService;
-    public ReceiptManagementController(IReceiptService receiptService, IContractService contractService)
+    public ReceiptManagementController(IReceiptService receiptService)
     {
         _receiptService = receiptService;
-        _contractService = contractService;
     }
     
     public async Task<IActionResult> Index()
@@ -23,7 +21,7 @@ public class ReceiptManagementController : AreaControllerBase
         return View(model);
     }
     
-    public IActionResult PrepareAdd()
+    public IActionResult Add()
     {
         var model = new AddReceiptViewModel()
         {
@@ -33,20 +31,6 @@ public class ReceiptManagementController : AreaControllerBase
         };
         
         return View(model);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> PrepareAdd([FromForm] AddReceiptViewModel model)
-    {
-        foreach (var modelValue in ModelState.Values)
-        {
-            modelValue.Errors.Clear();
-        }
-        
-        var contract = await _contractService.GetAsync<PreviewContractViewModel>(model.ContractId);
-        model.FullName = contract.CustomerDetail.FullName;
-        model.Address = contract.CustomerDetail.TempAccommodation;
-        return View("Add", model);
     }
     
     [HttpPost]

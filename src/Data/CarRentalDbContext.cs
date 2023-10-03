@@ -26,6 +26,7 @@ public class CarRentalDbContext : DbContext
     public DbSet<Contact> Contact { get; set; }
     public DbSet<Damages> Damages { get; set; }
     public DbSet<Receipt> Receipts { get; set; }
+    public DbSet<IncidentReports> IncidentReports { get; set; }
     
     public CarRentalDbContext(DbContextOptions<CarRentalDbContext> options)
         : base(options)
@@ -352,6 +353,21 @@ public class CarRentalDbContext : DbContext
             .WithMany(x => x.Receipts)
             .HasForeignKey(x => x.ContractId);
         receipt.Property(x => x.Price).HasPrecision(_sizeDecimal, _sizeDecimalScale);
+
+        var incidentReports = modelBuilder.Entity<IncidentReports>();
+        receipt.HasKey(x => x.Id);
+        receipt.Property(x => x.Id)
+            .UseIdentityColumn();
+
+        incidentReports.Property(x => x.ReportType)
+            .HasConversion(
+                v => v.ToString(),
+                v => (IncidentReportsTypeEnum)Enum.Parse(typeof(IncidentReportsTypeEnum), v))
+            .IsUnicode(false);
+
+        incidentReports.HasOne(x => x.Contract)
+            .WithMany(x => x.IncidentReports)
+            .HasForeignKey(x => x.ContractId);
         
         base.OnModelCreating(modelBuilder);
     }

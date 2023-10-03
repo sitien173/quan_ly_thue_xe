@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
-[Authorize(Roles = $"{Role.Admin},{Role.Accountant},{Role.ParkingAttendant},{Role.SalesRepresentative}")]
+[Authorize(Policy = nameof(PolicyEnum.All))]
 public class HomeController : AreaControllerBase
 {
     public IActionResult Index()

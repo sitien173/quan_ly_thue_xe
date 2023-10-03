@@ -14,6 +14,7 @@ public class Contract
     public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
     public ICollection<CarTransferAgreement> CarTransferAgreements { get; set; } = new List<CarTransferAgreement>();
     public ICollection<Receipt> Receipts { get; set; } = new List<Receipt>();
+    public ICollection<IncidentReports> IncidentReports { get; set; } = new List<IncidentReports>();
     public Damages? Damages { get; set; }
     public int RentRequestId { get; set; }
     public RentRequest RentRequest { get; set; }

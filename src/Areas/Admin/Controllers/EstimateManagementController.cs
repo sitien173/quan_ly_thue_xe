@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = Role.Admin)]
+[Authorize(Policy = nameof(PolicyEnum.Admin))]
 public class EstimateManagementController : AreaControllerBase
 {
     private readonly IEstimateService _featureService;

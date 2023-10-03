@@ -1,0 +1,79 @@
+﻿@using CarRentalManagement.Services
+@using CarRentalManagement.Extensions
+@model CarRentalManagement.Models.ViewModel.IncidentReportsManagement.EditIncidentReportsViewModel
+@inject IContractService ContractService
+@{
+    ViewBag.Title = "Cập nhật báo cáo sự cố";
+    Layout = "_Layout";
+    
+    var contractSelectListItems = await ContractService.ListAsync<SelectListItem>();
+    var reportTypeSelectListItems = IncidentReportsTypeEnum.Accident.ToSelectList();
+}
+<div class="container-fluid mr-top-20">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+        <div class="panel-body">
+            <form asp-action="Add" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="well well-sm text-danger">@TempData["Message"]</div>
+                <input asp-for="ReturnUrl"/>
+                <input asp-for="Id">
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="ContractId" class="control-label required"></label>
+                    <select asp-for="ContractId" readonly asp-items="contractSelectListItems" required class="form-control chosen">
+                    </select>
+                    <span asp-validation-for="ContractId" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="Description" class="control-label required"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="AdditionalDetails" class="control-label"></label>
+                    <textarea asp-for="AdditionalDetails" class="form-control"></textarea>
+                    <span asp-validation-for="AdditionalDetails" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="ReportType" class="control-label required"></label>
+                    <select asp-for="ReportType" asp-items="reportTypeSelectListItems" required class="form-control chosen">
+                    </select>
+                    <span asp-validation-for="ReportType" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="ReportDate" class="control-label"></label>
+                    <input asp-for="ReportDate" readonly class="form-control"/>
+                    <span asp-validation-for="ReportDate" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="CreatedBy" class="control-label"></label>
+                    <input asp-for="CreatedBy" readonly class="form-control"/>
+                    <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="UpdatedBy" class="control-label"></label>
+                    <input asp-for="UpdatedBy" readonly class="form-control"/>
+                    <span asp-validation-for="UpdatedBy" class="text-danger"></span>
+                </fieldset>
+                
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="UpdatedDate" class="control-label"></label>
+                    <input asp-for="UpdatedDate" readonly class="form-control"/>
+                    <span asp-validation-for="UpdatedDate" class="text-danger"></span>
+                </fieldset>
+                
+                <div style="float: right">
+                    <a class="btn btn-default" id="cancel">Huỷ</a>
+                    <button class="btn btn-primary" type="submit">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

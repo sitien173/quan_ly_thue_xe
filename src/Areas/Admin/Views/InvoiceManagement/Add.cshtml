@@ -1,7 +1,11 @@
-﻿@model CarRentalManagement.Models.ViewModel.InvoiceManagement.AddInvoiceViewModel
+﻿@using CarRentalManagement.Services
+@model CarRentalManagement.Models.ViewModel.InvoiceManagement.AddInvoiceViewModel
+@inject IContractService ContractService
 @{
     ViewBag.Title = "Thêm hoá đơn";
     Layout = "_Layout";
+
+    var contractSelectListItems = await ContractService.ListAsync<SelectListItem>();
 }
 <div class="container-fluid mr-top-20">
     <div class="panel panel-primary">
@@ -10,7 +14,13 @@
             <form asp-action="Add" method="post">
                 <input asp-for="ReturnUrl">
                 <input asp-for="CreatedBy">
-                <input asp-for="ContractId">
+                <input asp-for="CreatedAt">
+
+                <fieldset class="form-floating mb-3">
+                    <label asp-for="ContractId" class="control-label required"></label>
+                    <select asp-for="ContractId" asp-items="contractSelectListItems" required class="form-control chosen">
+                    </select>
+                </fieldset>
                 
                 <fieldset class="form-floating mb-3">
                     <label asp-for="Content" class="control-label"></label>

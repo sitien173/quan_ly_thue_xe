@@ -217,7 +217,7 @@
             </a>
         </li>
         <li>
-            <a asp-action="PrepareAdd" asp-controller="InvoiceManagement">
+            <a asp-action="Add" asp-controller="InvoiceManagement">
                 <span class="hidden-xs">Thêm</span>
             </a>
         </li>
@@ -235,7 +235,7 @@
             </a>
         </li>
         <li>
-            <a asp-action="PrepareAdd" asp-controller="ReceiptManagement">
+            <a asp-action="Add" asp-controller="ReceiptManagement">
                 <span class="hidden-xs">Thêm</span>
             </a>
         </li>
@@ -244,7 +244,7 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="fa fa-bar-chart-o"></i>
-        <span class="hidden-xs">Biên bản bàn giao xe</span>
+        <span class="hidden-xs">Bàn giao xe</span>
     </a>
     <ul class="dropdown-menu">
         <li>
@@ -299,6 +299,20 @@
         </li>
         <li>
             <a class="nav-link" asp-action="Add" asp-controller="DamagesManagement">Thêm</a>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bar-chart-o"></i>
+        <span class="hidden-xs">Báo cáo sự cố</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" asp-action="Index" asp-controller="IncidentReportsManagement">Danh sách</a>
+        </li>
+        <li>
+            <a class="nav-link" asp-action="Add" asp-controller="IncidentReportsManagement">Thêm</a>
         </li>
     </ul>
 </li>

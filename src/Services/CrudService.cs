@@ -46,7 +46,7 @@ public class CrudService<TEntity, TKey> : ReadOnlyService<TEntity, TKey>, ICrudS
     public virtual Task DeleteAsync(TKey id)
     {
         return DbSet
-            .Where("Id == @0 && IsDeleted == @false", id, false)
+            .Where("Id == @0 && !IsDeleted", id)
             .UpdateFromQueryAsync(new Dictionary<string, object>()
             {
                 { "IsDeleted", true }

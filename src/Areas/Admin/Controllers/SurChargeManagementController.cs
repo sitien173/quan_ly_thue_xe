@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = Role.Accountant)]
+[Authorize(Policy = nameof(PolicyEnum.Accountant))]
 public class SurChargeManagementController : AreaControllerBase
 {
     private readonly ISurChargeService _surChargeService;

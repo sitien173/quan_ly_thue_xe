@@ -22,7 +22,7 @@ builder.Services.Configure<CompanySettings>(builder.Configuration.GetSection(Com
 builder.Services.AddDbContext<CarRentalDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!, opt =>
     {
-        opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+        opt.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery);
     }).EnableSensitiveDataLogging());
 
 var cookieSettings = new CookiesSettings();
@@ -37,6 +37,46 @@ builder.Services.AddAuthentication(cookieSettings.AuthenticationScheme)
         options.ReturnUrlParameter = cookieSettings.ReturnUrlParameter;
         options.ExpireTimeSpan = TimeSpan.FromDays(cookieSettings.ExpireDay);
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(nameof(PolicyEnum.ParkingAttendant), policy =>
+    {
+        policy.RequireAuthenticatedUser()
+            .RequireRole(PolicyEnum.ParkingAttendant.Value.Split(','))
+            .Build();
+    });
+    
+    options.AddPolicy(nameof(PolicyEnum.SalesRepresentative), policy =>
+    {
+        policy.RequireAuthenticatedUser()
+            .RequireRole(PolicyEnum.SalesRepresentative.Value.Split(','))
+            .Build();
+    });
+    
+    options.AddPolicy(nameof(PolicyEnum.Accountant), policy =>
+    {
+        policy.RequireAuthenticatedUser()
+            .RequireRole(PolicyEnum.Accountant.Value.Split(','))
+            .Build();
+    });
+    
+    options.AddPolicy(nameof(PolicyEnum.Admin), policy =>
+    {
+        policy.RequireAuthenticatedUser()
+            .RequireRole(PolicyEnum.Admin.Value.Split(','))
+            .Build();
+    });
+    
+    options.AddPolicy(nameof(PolicyEnum.All), policy =>
+    {
+        policy.RequireAuthenticatedUser()
+            .RequireRole(PolicyEnum.All.Value.Split(','))
+            .Build();
+    });
+    
+    
+});
 
 var app = builder.Build();
 

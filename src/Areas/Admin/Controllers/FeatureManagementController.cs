@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = Role.ParkingAttendant)]
+[Authorize(Policy = nameof(PolicyEnum.ParkingAttendant))]
 public class FeatureManagementController : AreaControllerBase
 {
     private readonly IFeatureService _featureService;

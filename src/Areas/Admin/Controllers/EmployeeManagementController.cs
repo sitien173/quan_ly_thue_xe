@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = Role.Admin)]
+[Authorize(Policy = nameof(PolicyEnum.Admin))]
 public class EmployeeManagementController : AreaControllerBase
 {
     private readonly IEmployeeService _employeeService;

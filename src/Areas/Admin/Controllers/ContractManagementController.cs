@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = Role.Accountant)]
+[Authorize(Policy = nameof(PolicyEnum.Accountant))]
 public class ContractManagementController : AreaControllerBase
 {
     private readonly IContractService _contractService;
@@ -117,8 +117,6 @@ public class ContractManagementController : AreaControllerBase
         
         await _contractService.UpdateAsync(update, id).ConfigureAwait(false);
         
-        var model = await _contractService.GetAsync<PreviewContractViewModel>(id).ConfigureAwait(false);
-        
-        return View(model);
+        return RedirectToAction("Index");
     }
 }

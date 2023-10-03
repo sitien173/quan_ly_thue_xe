@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = Role.Accountant)]
+[Authorize(Policy = nameof(PolicyEnum.Accountant))]
 public class InvoiceManagementController : AreaControllerBase
 {
     private readonly IInvoiceService _invoiceService;
@@ -23,7 +23,7 @@ public class InvoiceManagementController : AreaControllerBase
         return View(model);
     }
     
-    public IActionResult PrepareAdd()
+    public IActionResult Add()
     {
         var model = new AddInvoiceViewModel()
         {
@@ -33,17 +33,6 @@ public class InvoiceManagementController : AreaControllerBase
         };
         
         return View(model);
-    }
-
-    [HttpPost]
-    public IActionResult PrepareAdd([FromForm] AddInvoiceViewModel model)
-    {
-        model.Content = Constant.InvoiceContentTemplate;
-        foreach (var modelValue in ModelState.Values)
-        {
-            modelValue.Errors.Clear();
-        }
-        return View("Add", model);
     }
     
     [HttpPost]

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = Role.ParkingAttendant)]
+[Authorize(Policy = nameof(PolicyEnum.ParkingAttendant))]
 public class CarTransferAgreementManagementController : AreaControllerBase
 {
     private readonly ICarTransferAgreementService _carTransferAgreementService;

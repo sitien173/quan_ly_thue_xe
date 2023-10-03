@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Areas.Admin.Controllers;
 
-[Authorize(Roles = $"{Role.SalesRepresentative}, {Role.Accountant}")]
+[Authorize(Policy = nameof(PolicyEnum.SalesRepresentative))]
 public class RentRequestManagementController : AreaControllerBase
 {
     private readonly IRentRequestService _rentRequestService;

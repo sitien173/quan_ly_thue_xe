@@ -96,3 +96,15 @@ input[type="date"]::-webkit-datetime-edit-day-field{
     padding: 2px;
     left: 4px;
 }
+
+.text-wrap {
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
