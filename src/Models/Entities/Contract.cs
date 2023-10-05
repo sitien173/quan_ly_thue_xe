@@ -17,5 +17,5 @@ public class Contract
     public ICollection<IncidentReports> IncidentReports { get; set; } = new List<IncidentReports>();
     public Damages? Damages { get; set; }
     public int RentRequestId { get; set; }
-    public RentRequest RentRequest { get; set; }
+    public RentRequest RentRequest { get; set; } = null!;
 }

@@ -12,6 +12,6 @@ public class Damages
     public int CreatedBy { get; set; }
     public bool IsDeleted { get; set; }
     
-    public Car Car { get; set; }
-    public Contract Contract { get; set; }
+    public Car Car { get; set; } = null!;
+    public Contract Contract { get; set; } = null!;
 }

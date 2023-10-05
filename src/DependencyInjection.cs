@@ -1,9 +1,4 @@
-﻿using System.Reflection;
-using CarRentalManagement.Common;
-using CarRentalManagement.Models.Settings;
-using CarRentalManagement.Services;
-
-namespace CarRentalManagement;
+﻿namespace CarRentalManagement;
 
 public static class DependencyInjection
 {

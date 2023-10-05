@@ -11,6 +11,6 @@ public class ContractDetail
     public int Amount { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal Price { get; set; }
-    public Contract Contract { get; set; }
-    public Car Car { get; set; }
+    public Contract Contract { get; set; } = null!;
+    public Car Car { get; set; } = null!;
 }

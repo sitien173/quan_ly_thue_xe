@@ -35,7 +35,7 @@ public class ReadOnlyService<TEntity, TKey> : IReadOnlyService<TEntity, TKey> wh
     {
         return DbSet
             .AsNoTracking()
-            .Where("IsDeleted == @0", false)
+            .Where("!IsDeleted")
             .AddWhereClause(predicate!, predicate is not null)
             .ProjectTo<TDest>(Mapper.ConfigurationProvider)
             .ToListAsync();
@@ -44,7 +44,7 @@ public class ReadOnlyService<TEntity, TKey> : IReadOnlyService<TEntity, TKey> wh
     public virtual async Task<TDest> GetAsync<TDest>(TKey id)
     {
         var viewModel = await DbSet
-            .Where("Id == @0 && IsDeleted == @1", id, false)
+            .Where("Id == @0 && !IsDeleted", id)
             .AsNoTracking()
             .ProjectTo<TDest>(Mapper.ConfigurationProvider)
             .FirstOrDefaultAsync().ConfigureAwait(false);

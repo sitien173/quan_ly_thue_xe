@@ -9,5 +9,5 @@ public class Estimate
     public decimal UnitPrice { get; set; }
     public DateTime UpdatedAt { get; set; }
     public bool IsDeleted { get; set; }
-    public CarType CarType { get; set; }
+    public CarType CarType { get; set; } = null!;
 }

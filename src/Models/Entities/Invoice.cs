@@ -12,5 +12,5 @@ public class Invoice
     public int CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; }
     public bool IsDeleted { get; set; }
-    public Contract Contract { get; set; }
+    public Contract Contract { get; set; } = null!;
 }

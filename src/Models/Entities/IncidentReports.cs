@@ -4,7 +4,7 @@ public class IncidentReports
 {
     public int Id { get; set; }
     public int ContractId { get; set; }
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
     public string? AdditionalDetails  { get; set; }
     public IncidentReportsTypeEnum ReportType { get; set; }
     public DateTime ReportDate { get; set; }
@@ -12,5 +12,5 @@ public class IncidentReports
     public int? UpdatedBy { get; set; }
     public DateTime? UpdatedDate { get; set; }
     public bool IsDeleted { get; set; }
-    public Contract Contract { get;set; }
+    public Contract Contract { get;set; } = null!;
 }
