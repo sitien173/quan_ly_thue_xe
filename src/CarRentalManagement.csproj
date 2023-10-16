@@ -33,7 +33,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Repositories\" />
       <Folder Include="wwwroot\images" />
       <Folder Include="wwwroot\libs\" />
       <Folder Include="wwwroot\uploads\thumbs" />
@@ -85,6 +84,30 @@
 
     <ItemGroup>
       <Content Include="wwwroot\libs\froala-editor\.github\ISSUE_TEMPLATE.md" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\SharedResource.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\SharedResource.vn-VN.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SharedResource.vn-VN.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\SharedResource.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SharedResource.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\SharedResource.vn-VN.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SharedResource.vn-VN.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

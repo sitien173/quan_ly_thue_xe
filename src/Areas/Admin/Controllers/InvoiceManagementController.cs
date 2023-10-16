@@ -29,7 +29,8 @@ public class InvoiceManagementController : AreaControllerBase
         {
             ReturnUrl = Request.Headers["Referer"].ToString(),
             CreatedBy = UserId,
-            CreatedAt = DateTime.Now
+            CreatedAt = DateTime.Now,
+            Content = Constant.InvoiceContentTemplate
         };
         
         return View(model);
