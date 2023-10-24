@@ -1,11 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:element name="root" msdata:IsDataSet="true">
-            
-        </xsd:element>
-    </xsd:schema>
+﻿<root>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -19,33 +12,33 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="LOGIN_SUCCESS" xml:space="preserve">
-        <value />
+        <value>Logged in successfully</value>
     </data>
     <data name="LOGIN_E001" xml:space="preserve">
-        <value />
+        <value>Check your username and password again</value>
     </data>
     <data name="RENTCAR_SUCCESS" xml:space="preserve">
-        <value />
+        <value>Car booking is successful, please wait for confirmation from the staff</value>
     </data>
     <data name="RENTCAR_FAIL" xml:space="preserve">
-        <value />
+        <value>Vehicle is not available during this time frame</value>
     </data>
     <data name="FORGOTPW_SUCCESS" xml:space="preserve">
-        <value />
+        <value>Please check your email to retrieve your password</value>
     </data>
     <data name="FORGOTPW_FAIL" xml:space="preserve">
-        <value />
+        <value>The customer does not exist</value>
     </data>
     <data name="SIGNUP_SUCCESS" xml:space="preserve">
-        <value />
+        <value>Registration successful, please check your email to confirm your account</value>
     </data>
     <data name="CHANGE_PASSWORD_SUCCESS" xml:space="preserve">
-        <value />
+        <value>Password change successful, please log in again</value>
     </data>
     <data name="CHECK_EMAIL_TO_RESET_PASSWORD" xml:space="preserve">
-        <value />
+        <value>Please check your email to retrieve your password</value>
     </data>
     <data name="VERIFY_ACCOUNT_SUCCESS" xml:space="preserve">
-        <value />
+        <value>Account verification successful, please log in again</value>
     </data>
 </root>

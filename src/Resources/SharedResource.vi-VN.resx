@@ -29,4 +29,16 @@
     <data name="FORGOTPW_FAIL" xml:space="preserve">
         <value>Khách hàng không tồn tại</value>
     </data>
+    <data name="SIGNUP_SUCCESS" xml:space="preserve">
+        <value>Đăng ký thành công, vui lòng kiểm tra email để xác nhận tài khoản</value>
+    </data>
+    <data name="CHANGE_PASSWORD_SUCCESS" xml:space="preserve">
+        <value>Đổi mật khẩu thành công, vui lòng đăng nhập lại</value>
+    </data>
+    <data name="CHECK_EMAIL_TO_RESET_PASSWORD" xml:space="preserve">
+        <value>Vui lòng kiểm tra email để lấy lại mật khẩu</value>
+    </data>
+    <data name="VERIFY_ACCOUNT_SUCCESS" xml:space="preserve">
+        <value>Xác minh tài khoản thành công, vui lòng đăng nhập lại</value>
+    </data>
 </root>
