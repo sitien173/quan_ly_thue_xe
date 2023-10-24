@@ -89,7 +89,6 @@ public class EditCustomerViewModel
     [ReadOnly(true)]
     [Display(Name= "Ngày cấp")]
     [DataType(DataType.Date)]
-
     [Required(ErrorMessage = "Ngày cấp không được để trống", AllowEmptyStrings = false)]
     public DateTime DateOfIssue { get; set; }
     

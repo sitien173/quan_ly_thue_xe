@@ -2,13 +2,32 @@ using System.Reflection;
 using CarRentalManagement;
 using CarRentalManagement.Data;
 using CarRentalManagement.Models.Settings;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews();
 
+builder.Services
+    .AddMvc()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization(options => {
+        options.DataAnnotationLocalizerProvider = (type, factory) =>
+            factory.Create(typeof(SharedResource));
+    });
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.SetDefaultCulture("vi-VN");
+    options.AddSupportedUICultures("vi-VN", "en-US");
+    options.FallBackToParentUICultures = true;
+    options.RequestCultureProviders.Clear();
+});
 
 
 builder.Services.RegistrationService();
@@ -104,6 +123,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRequestLocalization();
 
 app.MapAreaControllerRoute(name: AreaManager.Admin, areaName: AreaManager.Admin, pattern: AreaManager.Admin + "/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(

@@ -62,6 +62,24 @@ namespace CarRentalManagement.Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        internal static string CHANGE_PASSWORD_SUCCESS {
+            get {
+                return ResourceManager.GetString("CHANGE_PASSWORD_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CHECK_EMAIL_TO_RESET_PASSWORD {
+            get {
+                return ResourceManager.GetString("CHECK_EMAIL_TO_RESET_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         internal static string FORGOTPW_FAIL {
             get {
                 return ResourceManager.GetString("FORGOTPW_FAIL", resourceCulture);
@@ -110,6 +128,24 @@ namespace CarRentalManagement.Resources {
         internal static string RENTCAR_SUCCESS {
             get {
                 return ResourceManager.GetString("RENTCAR_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SIGNUP_SUCCESS {
+            get {
+                return ResourceManager.GetString("SIGNUP_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string VERIFY_ACCOUNT_SUCCESS {
+            get {
+                return ResourceManager.GetString("VERIFY_ACCOUNT_SUCCESS", resourceCulture);
             }
         }
     }
