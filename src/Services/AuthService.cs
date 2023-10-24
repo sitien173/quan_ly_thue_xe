@@ -148,7 +148,7 @@ public class AuthService : IAuthService
         {
             ToEmail = model.Email,
             Subject = "Xác thực địa chỉ email",
-            Body = $"<h1>Xin chào {model.FirstName} {model.LastName}</h1><p>Vui lòng nhấn vào link sau để xác thực địa chỉ email của bạn: <a href='{_customSettings.Value.BaseUrl}/auth/verify?token={maThongBao.Token}?returnUrl={model.ReturnUrl}'>Xác thực</a></p>"
+            Body = $"<h1>Xin chào {model.FirstName} {model.LastName}</h1><p>Vui lòng nhấn vào link sau để xác thực địa chỉ email của bạn: <a href='{_customSettings.Value.BaseUrl}/auth/verify?token={maThongBao.Token}&returnUrl={model.ReturnUrl}'>Xác thực</a></p>"
         };
 
         _emailService.SendEmailAsync(mailRequest).SafeFireAndForget();
@@ -157,7 +157,9 @@ public class AuthService : IAuthService
     
     public async Task VerifyAsync(string token)
     {
-        var verifyToken = await _context.Notification.FirstOrDefaultAsync(x => x.Token == token).ConfigureAwait(false);
+        var verifyToken = await _context.Notification
+            .Include(x => x.Customer)
+            .FirstOrDefaultAsync(x => x.Token == token).ConfigureAwait(false);
         Guard.Against.Null(verifyToken, nameof(token), "Mã xác thực không tồn tại");
         Guard.Against.InvalidInput(verifyToken, string.Empty, x => !x.IsConfirm, "Mã xác thực đã được kích hoạt");
         Guard.Against.InvalidInput(verifyToken, string.Empty, x => DateTime.Now < x.ExpirationAt, "Mã xác thực đã hết hạn");

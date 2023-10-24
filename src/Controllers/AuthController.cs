@@ -1,6 +1,4 @@
 ﻿using System.Security.Claims;
-using AutoMapper;
-using CarRentalManagement.Common;
 using CarRentalManagement.Interceptors.Filter;
 using CarRentalManagement.Models.Settings;
 using CarRentalManagement.Models.ViewModel.Auth;
@@ -8,6 +6,7 @@ using CarRentalManagement.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace CarRentalManagement.Controllers;
@@ -17,10 +16,12 @@ public class AuthController : BaseController
 {
     private readonly IAuthService _authService;
     private readonly CookiesSettings _cookiesSettings;
+    private readonly IStringLocalizer<SharedResource> _localizer;
 
-    public AuthController(IAuthService authService, IOptions<CookiesSettings> options)
+    public AuthController(IAuthService authService, IOptions<CookiesSettings> options, IStringLocalizer<SharedResource> localizer)
     {
         _authService = authService;
+        _localizer = localizer;
         _cookiesSettings = options.Value;
     }
 
@@ -89,7 +90,7 @@ public class AuthController : BaseController
     public async Task<IActionResult> Register([FromForm] RegistrationViewModel model)
     {
         await _authService.CreateAsync(model).ConfigureAwait(false);
-        _ = TempData.TryAdd("Message", "Đăng ký thành công, vui lòng kiểm tra email để xác nhận tài khoản");
+        _ = TempData.TryAdd("Message", _localizer[SharedResource.SIGNUP_SUCCESS].Value);
         return RedirectToAction("WaitConfirm");
     }
     
@@ -117,7 +118,7 @@ public class AuthController : BaseController
     public async Task<IActionResult> ChangePassword([FromForm] ChangePasswordViewModel model)
     {
         await _authService.ChangePasswordAsync(model).ConfigureAwait(false);
-        _ = TempData.TryAdd("Message", "Đổi mật khẩu thành công, vui lòng đăng nhập lại");
+        _ = TempData.TryAdd("Message", _localizer[SharedResource.CHANGE_PASSWORD_SUCCESS].Value);
         return RedirectToAction("Logout");
     }
     
@@ -131,7 +132,7 @@ public class AuthController : BaseController
     public async Task<IActionResult> ResetPassword([FromForm] string email)
     {
         await _authService.ResetPasswordAsync(email).ConfigureAwait(false);
-        _ = TempData.TryAdd("Message", "Vui lòng kiểm tra email để lấy lại mật khẩu");
+        _ = TempData.TryAdd("Message", _localizer[SharedResource.CHECK_EMAIL_TO_RESET_PASSWORD].Value);
         return RedirectToAction("WaitConfirm");
     }
 
@@ -139,7 +140,7 @@ public class AuthController : BaseController
     public async Task<IActionResult> Verify([FromQuery] string token)
     {
         await _authService.VerifyAsync(token).ConfigureAwait(false);
-        _ = TempData.TryAdd("Message", "Xác minh tài khoản thành công, vui lòng đăng nhập lại");
-        return RedirectToAction("Login");
+        _ = TempData.TryAdd("Message", _localizer[SharedResource.VERIFY_ACCOUNT_SUCCESS].Value);
+        return View();
     }
 }
