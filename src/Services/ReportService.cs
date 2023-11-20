@@ -26,7 +26,7 @@ public class ReportService : IReportService
         var revenueViewModel = new RevenueResponseViewModel();
         var invoices = _context.Invoice
             .Where(x => !x.IsDeleted)
-            .AddWhereClause(x => x.CreatedAt >= request.StartDate && x.CreatedAt <= request.EndDate, request is { StartDate: { }, EndDate: { } });
+            .AddWhereClause(x => x.CreatedAt >= request.StartDate && x.CreatedAt <= request.EndDate, request is { StartDate: not null, EndDate: not null });
         
         var groupByFunc = request.ReportType switch
         {
@@ -51,6 +51,5 @@ public class ReportService : IReportService
         });
         revenueViewModel.Data.Labels = data.Select(x => x.Label).ToArray();
         return revenueViewModel;
-
     }
 }
