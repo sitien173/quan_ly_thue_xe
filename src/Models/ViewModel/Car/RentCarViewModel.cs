@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CarRentalManagement.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Models.ViewModel.Car;
@@ -13,6 +14,7 @@ public class RentCarViewModel
     [Display(Name = "Ngày trả")]
     [DataType(DataType.Date)]
     [Required(ErrorMessage = "Ngày trả không được để trống")]
+    [DateGreaterThan("StartDate", ErrorMessage = "Ngày trả phải lớn hơn ngày thuê")]
     public DateTime EndDate { get; set; } 
         
     [HiddenInput]
